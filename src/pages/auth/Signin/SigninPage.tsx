@@ -1,37 +1,25 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { MouseEvent } from 'react';
 import InputField from '../../../components/common/InputField/InputField';
 import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import styles from './SigninPage.module.css';
+import useForm from '../../../hooks/useForm';
+import { validateSignin } from '../../../utils/validate';
 
 function SigninPage() {
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
+  // useForm() 커스텀 훅
+  const { values, errors, touched, getInputProps } = useForm({
+    initialValue: {
+      email: '',
+      password: '',
+    },
+    validate: validateSignin,
   });
 
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  });
-
-  const [touched, setTouched] = useState({
-    email: false,
-    password: false,
-  });
-
-  const handleChangeValue = (
-    name: string,
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
-    setValues(prev => ({ ...prev, [name]: e.target.value }));
-  };
-
-  const handleChangeTouched = (name: string) => {
-    setTouched(prev => ({ ...prev, [name]: true }));
-  };
+  console.log(errors);
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    console.log(values);
   };
 
   return (
@@ -40,21 +28,20 @@ function SigninPage() {
       <form className={styles.formContainer}>
         <InputField
           type="text"
-          value={values.email}
           placeholder="이메일"
           touched={touched.email}
           error={errors.email}
-          onChange={e => handleChangeValue('email', e)}
-          onBlur={() => handleChangeTouched('email')}
+          {...getInputProps('email')}
+          // value={values.email}
+          // onChange={e => handleChangeValue('email', e)}
+          // onBlur={() => handleChangeTouched('email')}
         />
         <InputField
           type="password"
-          value={values.password}
           placeholder="비밀번호"
           touched={touched.password}
           error={errors.password}
-          onChange={e => handleChangeValue('password', e)}
-          onBlur={() => handleChangeTouched('password')}
+          {...getInputProps('password')}
         />
         <CustomButton
           label="로그인"

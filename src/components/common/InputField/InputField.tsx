@@ -34,9 +34,7 @@ function InputField({
         onChange={e => onChange(e)}
         onBlur={() => onBlur()}
       />
-      {touched && true && (
-        <p className={styles.errorText}>이메일을 입력해주세요.</p>
-      )}
+      {touched && Boolean(error) && <p className={styles.errorText}>{error}</p>}
     </div>
   );
 }
