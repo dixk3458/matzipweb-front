@@ -1,6 +1,7 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import InputField from '../../../components/common/InputField/InputField';
 import CustomButton from '../../../components/common/CustomButton/CustomButton';
+import styles from './SigninPage.module.css';
 
 function SigninPage() {
   const [values, setValues] = useState({
@@ -34,9 +35,9 @@ function SigninPage() {
   };
 
   return (
-    <section>
-      <h1>로그인</h1>
-      <form action="">
+    <section className={styles.container}>
+      <h1 className={styles.titleText}>로그인</h1>
+      <form className={styles.formContainer}>
         <InputField
           type="text"
           value={values.email}

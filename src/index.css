@@ -1,3 +1,12 @@
+:root {
+  --color-white: white;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #ddd;
+  --color-red-300: #ee3f4e;
+  --color-blue-300: #007bff;
+  --color-blue-400: #0056b3;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -8,4 +17,10 @@ html,
 body,
 #root {
   height: 100vh;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

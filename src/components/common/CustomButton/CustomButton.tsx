@@ -1,4 +1,5 @@
 import { MouseEvent } from 'react';
+import styles from './CustomButton.module.css';
 
 interface CustomButtonProps {
   label: string;
@@ -13,7 +14,14 @@ function CustomButton({
   size = 'medium',
   onClick,
 }: CustomButtonProps) {
-  return <button onClick={e => onClick(e)}>{label}</button>;
+  return (
+    <button
+      className={`${styles.container} ${styles[variant]} ${styles[size]}`}
+      onClick={e => onClick(e)}
+    >
+      <p className={styles.buttonText}>{label}</p>
+    </button>
+  );
 }
 
 export default CustomButton;
