@@ -3,6 +3,7 @@ import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import InputField from '../../../components/common/InputField/InputField';
 import useForm from '../../../hooks/useForm';
 import { validateSignup } from '../../../utils/validate';
+import styles from './SignupPage.module.css';
 
 function SignupPage() {
   const { values, touched, errors, getInputProps } = useForm({
@@ -19,9 +20,9 @@ function SignupPage() {
   };
 
   return (
-    <section>
-      <h1>회원가입</h1>
-      <form>
+    <section className={styles.container}>
+      <h1 className={styles.titleText}>회원가입</h1>
+      <form className={styles.formContainer}>
         <InputField
           type="text"
           placeholder="이메일"
