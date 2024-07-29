@@ -4,6 +4,7 @@ import InputField from '../../../components/common/InputField/InputField';
 import useForm from '../../../hooks/useForm';
 import { validateSignup } from '../../../utils/validate';
 import styles from './SignupPage.module.css';
+import { postSignup } from '../../../apis/auth';
 
 function SignupPage() {
   const { values, touched, errors, getInputProps } = useForm({
@@ -15,8 +16,18 @@ function SignupPage() {
     validate: validateSignup,
   });
 
-  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    try {
+      const response = await postSignup({
+        email: values.email,
+        password: values.password,
+      });
+      console.log('User signed up:', response);
+      // 회원가입 후 반환된 사용자 정보를 활용한 추가 로직
+    } catch (error) {
+      console.error('Error signing up:', error);
+    }
   };
 
   return (
