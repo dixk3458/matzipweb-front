@@ -18,15 +18,18 @@ function SignupPage() {
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     try {
       const response = await postSignup({
         email: values.email,
         password: values.password,
       });
-      console.log('User signed up:', response);
-      // 회원가입 후 반환된 사용자 정보를 활용한 추가 로직
+      console.log('Response');
+      console.log(response);
+      alert('회원가입 성공');
     } catch (error) {
-      console.error('Error signing up:', error);
+      console.log(error);
+      alert('실패');
     }
   };
 

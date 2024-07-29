@@ -4,8 +4,11 @@ import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import styles from './SigninPage.module.css';
 import useForm from '../../../hooks/useForm';
 import { validateSignin } from '../../../utils/validate';
+import { postSignin } from '../../../apis/auth';
+import { useNavigate } from 'react-router-dom';
 
 function SigninPage() {
+  const navigation = useNavigate();
   // useForm() 커스텀 훅
   const { values, errors, touched, getInputProps } = useForm({
     initialValue: {
@@ -17,9 +20,21 @@ function SigninPage() {
 
   console.log(errors);
 
-  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(values);
+
+    try {
+      const response = await postSignin({
+        email: values.email,
+        password: values.password,
+      });
+      localStorage.setItem('accessToken', response.accessToken);
+      alert('성공');
+      navigation('/home');
+    } catch (error) {
+      console.log(error, 'error');
+      alert('실패');
+    }
   };
 
   return (
