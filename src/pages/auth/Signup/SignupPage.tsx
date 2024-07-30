@@ -4,9 +4,16 @@ import InputField from '../../../components/common/InputField/InputField';
 import useForm from '../../../hooks/useForm';
 import { validateSignup } from '../../../utils/validate';
 import styles from './SignupPage.module.css';
-import { postSignup } from '../../../apis/auth';
+import useAuth from '../../../hooks/queries/useAuth';
+import { useNavigate } from 'react-router-dom';
+import messages from '../../../constants/messages';
 
 function SignupPage() {
+  const navigation = useNavigate();
+
+  const { signupMutation } = useAuth();
+
+  // useForm() 훅
   const { values, touched, errors, getInputProps } = useForm({
     initialValue: {
       email: '',
@@ -18,19 +25,19 @@ function SignupPage() {
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    try {
-      const response = await postSignup({
-        email: values.email,
-        password: values.password,
-      });
-      console.log('Response');
-      console.log(response);
-      alert('회원가입 성공');
-    } catch (error) {
-      console.log(error);
-      alert('실패');
-    }
+    signupMutation.mutate(
+      { email: values.email, password: values.password },
+      {
+        onSuccess: () => {
+          alert(messages.SUCCESS_SIGNUP);
+          navigation('/signin');
+        },
+        onError: error => {
+          console.log(error);
+          alert(error.response?.data.message);
+        },
+      }
+    );
   };
 
   return (

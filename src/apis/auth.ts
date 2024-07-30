@@ -5,6 +5,10 @@ type RequestUser = {
   password: string;
 };
 
+type ResponseToken = {
+  accessToken: string;
+};
+
 async function postSignup({ email, password }: RequestUser) {
   const { data } = await axiosInstance.post('/auth/signup', {
     email,
@@ -14,7 +18,10 @@ async function postSignup({ email, password }: RequestUser) {
   return data;
 }
 
-async function postSignin({ email, password }: RequestUser) {
+async function postSignin({
+  email,
+  password,
+}: RequestUser): Promise<ResponseToken> {
   const { data } = await axiosInstance.post('/auth/signin', {
     email,
     password,
@@ -36,4 +43,4 @@ export const refreshToken = async () => {
 };
 
 export { postSignup, postSignin };
-export type { RequestUser };
+export type { RequestUser, ResponseToken };

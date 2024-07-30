@@ -4,11 +4,16 @@ import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import styles from './SigninPage.module.css';
 import useForm from '../../../hooks/useForm';
 import { validateSignin } from '../../../utils/validate';
-import { postSignin } from '../../../apis/auth';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../../hooks/queries/useAuth';
+import messages from '../../../constants/messages';
 
 function SigninPage() {
   const navigation = useNavigate();
+
+  // useAuth() 커스텀 훅
+  const { signinMutation } = useAuth();
+
   // useForm() 커스텀 훅
   const { values, errors, touched, getInputProps } = useForm({
     initialValue: {
@@ -18,23 +23,22 @@ function SigninPage() {
     validate: validateSignin,
   });
 
-  console.log(errors);
-
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    try {
-      const response = await postSignin({
-        email: values.email,
-        password: values.password,
-      });
-      localStorage.setItem('accessToken', response.accessToken);
-      alert('성공');
-      navigation('/home');
-    } catch (error) {
-      console.log(error, 'error');
-      alert('실패');
-    }
+    signinMutation.mutate(
+      { email: values.email, password: values.password },
+      {
+        onSuccess: () => {
+          alert(messages.SUCCESS_SIGNIN);
+          navigation('/home');
+        },
+        onError: error => {
+          console.log(error);
+          alert(error.response?.data.message);
+        },
+      }
+    );
   };
 
   return (
