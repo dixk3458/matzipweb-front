@@ -4,8 +4,7 @@ function setLocalStorage(key: string, value: string) {
 
 function getLocalStorage(key: string) {
   const data = localStorage.getItem(key);
-
-  return data;
+  return data ? JSON.parse(data) : null;
 }
 
 function removeLocalStorage(key: string) {

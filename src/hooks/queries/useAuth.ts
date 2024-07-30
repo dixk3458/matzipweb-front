@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { postSignin, postSignup } from '../../apis/auth';
+import { logout, postSignin, postSignup } from '../../apis/auth';
 import { UseMutationCustomOptions } from '../../types';
-import { setLocalStorage } from '../../utils/localStorage';
+import { removeLocalStorage, setLocalStorage } from '../../utils/localStorage';
 import { storageKeys } from '../../constants/keys';
 
 function useSignup(mutationOptions?: UseMutationCustomOptions) {
@@ -18,6 +18,7 @@ function useSignin(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: postSignin,
     onSuccess: ({ accessToken }) => {
+      console.log(accessToken);
       setLocalStorage(storageKeys.ACCESS_TOKEN, accessToken);
     },
     onError: error => {
@@ -27,11 +28,27 @@ function useSignin(mutationOptions?: UseMutationCustomOptions) {
   });
 }
 
+function useLogout(mutationOptions?: UseMutationCustomOptions) {
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      removeLocalStorage(storageKeys.ACCESS_TOKEN);
+      console.log('로그아웃 성공');
+    },
+    onError: error => {
+      console.log(error);
+      console.log('로그아웃 실패');
+    },
+    ...mutationOptions,
+  });
+}
+
 function useAuth() {
   const signupMutation = useSignup();
   const signinMutation = useSignin();
+  const logoutMutation = useLogout();
 
-  return { signupMutation, signinMutation };
+  return { signupMutation, signinMutation, logoutMutation };
 }
 
 export default useAuth;

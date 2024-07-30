@@ -30,6 +30,10 @@ async function postSignin({
   return data;
 }
 
+async function logout(): Promise<void> {
+  await axiosInstance.post('/auth/logout');
+}
+
 export const refreshToken = async () => {
   try {
     const response = await axiosInstance.post('/auth/refresh');
@@ -42,5 +46,5 @@ export const refreshToken = async () => {
   }
 };
 
-export { postSignup, postSignin };
+export { postSignup, postSignin, logout };
 export type { RequestUser, ResponseToken };
