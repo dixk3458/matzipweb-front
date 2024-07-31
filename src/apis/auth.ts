@@ -1,6 +1,4 @@
-import { storageKeys } from '../constants';
 import { Profile } from '../types';
-import { getLocalStorage } from '../utils';
 import axiosInstance from './axios';
 
 type RequestUser = {
@@ -46,15 +44,8 @@ async function getProfile(): Promise<ResponseProfile> {
 }
 
 async function getAccessToken(): Promise<ResponseToken> {
-  const accessToken = getLocalStorage(storageKeys.ACCESS_TOKEN);
-  const { data } = await axiosInstance.post('/auth/refresh', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
+  const { data } = await axiosInstance.post('/auth/refresh');
   return data;
 }
-
 export { postSignup, postSignin, logout, getProfile, getAccessToken };
 export type { RequestUser, ResponseToken, ResponseProfile };
