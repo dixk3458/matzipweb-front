@@ -1,6 +1,12 @@
-import { useMutation } from '@tanstack/react-query';
-import { logout, postSignin, postSignup } from '../../apis/auth';
-import { UseMutationCustomOptions } from '../../types';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  getAccessToken,
+  getProfile,
+  logout,
+  postSignin,
+  postSignup,
+} from '../../apis/auth';
+import { UseMutationCustomOptions, UseQueryCustomOptions } from '../../types';
 import { queryKeys, storageKeys } from '../../constants/keys';
 import {
   queryClient,
@@ -9,6 +15,8 @@ import {
   setHeader,
   setLocalStorage,
 } from '../../utils';
+import { numbers } from '../../constants';
+import { useEffect } from 'react';
 
 function useSignup(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
@@ -30,6 +38,15 @@ function useSignin(mutationOptions?: UseMutationCustomOptions) {
     onError: error => {
       console.log(error);
     },
+    onSettled: () => {
+      // 로그인에 성공하든 실패하든 상관없이
+      queryClient.refetchQueries({
+        queryKey: [queryKeys.AUTH, queryKeys.GET_ACCESS_TOKEN],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.AUTH, queryKeys.GET_PROFILE],
+      });
+    }, // 성공 실패 상관없이 수행
     ...mutationOptions,
   });
 }
@@ -51,12 +68,62 @@ function useLogout(mutationOptions?: UseMutationCustomOptions) {
   });
 }
 
+function useGetProfile(queryOptions?: UseQueryCustomOptions) {
+  return useQuery({
+    queryFn: getProfile,
+    queryKey: [queryKeys.AUTH, queryKeys.GET_PROFILE],
+    ...queryOptions,
+  });
+}
+
+function useGetRefreshToken() {
+  const { isSuccess, isError, data, isPending } = useQuery({
+    queryFn: getAccessToken,
+    queryKey: [queryKeys.AUTH, queryKeys.GET_ACCESS_TOKEN],
+    staleTime: numbers.ACCESS_TOKEN_REFRESH_TIME,
+    refetchInterval: numbers.ACCESS_TOKEN_REFRESH_TIME,
+    refetchOnReconnect: true,
+    refetchIntervalInBackground: true,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setHeader('Authorization', `Bearer ${data.accessToken}`);
+      setLocalStorage(storageKeys.ACCESS_TOKEN, data.accessToken);
+    }
+  }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (isError) {
+      removeHeader('Authorization');
+      removeLocalStorage(storageKeys.ACCESS_TOKEN);
+    }
+  }, [isError]);
+
+  return { isSuccess, isError, isPending };
+}
+
 function useAuth() {
+  const refreshTokenQuery = useGetRefreshToken();
   const signupMutation = useSignup();
   const signinMutation = useSignin();
   const logoutMutation = useLogout();
 
-  return { signupMutation, signinMutation, logoutMutation };
-}
+  const getProfileQuery = useGetProfile({
+    enabled: refreshTokenQuery.isSuccess,
+  });
 
+  const isLoginLoading =
+    refreshTokenQuery.isPending || getProfileQuery.isFetching;
+  const isLogin = getProfileQuery.isSuccess;
+
+  return {
+    signupMutation,
+    signinMutation,
+    logoutMutation,
+    getProfileQuery,
+    isLogin,
+    isLoginLoading,
+  };
+}
 export default useAuth;

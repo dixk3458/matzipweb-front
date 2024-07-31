@@ -1,4 +1,8 @@
-import { UseMutationOptions } from '@tanstack/react-query';
+import {
+  QueryKey,
+  UseMutationOptions,
+  UseQueryOptions,
+} from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 type ResponseError = AxiosError<{
@@ -12,4 +16,11 @@ type UseMutationCustomOptions<TData = unknown, TVariables = unknown> = Omit<
   'mutationFn'
 >;
 
-export type { UseMutationCustomOptions };
+type UseQueryCustomOptions<
+  TQueryFnData = unknown,
+  TError = ResponseError,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
+> = Omit<UseQueryOptions, 'queryFn' | 'queryKey'>;
+
+export type { UseMutationCustomOptions, UseQueryCustomOptions };

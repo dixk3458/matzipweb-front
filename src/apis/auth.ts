@@ -1,3 +1,6 @@
+import { storageKeys } from '../constants';
+import { Profile } from '../types';
+import { getLocalStorage } from '../utils';
 import axiosInstance from './axios';
 
 type RequestUser = {
@@ -8,6 +11,8 @@ type RequestUser = {
 type ResponseToken = {
   accessToken: string;
 };
+
+type ResponseProfile = Profile;
 
 async function postSignup({ email, password }: RequestUser) {
   const { data } = await axiosInstance.post('/auth/signup', {
@@ -34,17 +39,22 @@ async function logout(): Promise<void> {
   await axiosInstance.post('/auth/logout');
 }
 
-export const refreshToken = async () => {
-  try {
-    const response = await axiosInstance.post('/auth/refresh');
-    const { accessToken } = response.data;
-    localStorage.setItem('accessToken', accessToken);
-    return accessToken;
-  } catch (error) {
-    console.error('Error refreshing token:', error);
-    throw error;
-  }
-};
+async function getProfile(): Promise<ResponseProfile> {
+  const { data } = await axiosInstance.get('/auth/me');
 
-export { postSignup, postSignin, logout };
-export type { RequestUser, ResponseToken };
+  return data;
+}
+
+async function getAccessToken(): Promise<ResponseToken> {
+  const accessToken = getLocalStorage(storageKeys.ACCESS_TOKEN);
+  const { data } = await axiosInstance.post('/auth/refresh', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return data;
+}
+
+export { postSignup, postSignin, logout, getProfile, getAccessToken };
+export type { RequestUser, ResponseToken, ResponseProfile };
