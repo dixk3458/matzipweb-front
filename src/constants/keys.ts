@@ -2,4 +2,8 @@ const storageKeys = {
   ACCESS_TOKEN: 'accessToken',
 } as const;
 
-export { storageKeys };
+const queryKeys = {
+  AUTH: 'auth',
+} as const;
+
+export { storageKeys, queryKeys };

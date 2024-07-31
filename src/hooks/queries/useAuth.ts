@@ -1,8 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 import { logout, postSignin, postSignup } from '../../apis/auth';
 import { UseMutationCustomOptions } from '../../types';
-import { removeLocalStorage, setLocalStorage } from '../../utils/localStorage';
-import { storageKeys } from '../../constants/keys';
+import { queryKeys, storageKeys } from '../../constants/keys';
+import {
+  queryClient,
+  removeHeader,
+  removeLocalStorage,
+  setHeader,
+  setLocalStorage,
+} from '../../utils';
 
 function useSignup(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
@@ -18,8 +24,8 @@ function useSignin(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: postSignin,
     onSuccess: ({ accessToken }) => {
-      console.log(accessToken);
       setLocalStorage(storageKeys.ACCESS_TOKEN, accessToken);
+      setHeader('Authorization', `Bearer ${accessToken}`);
     },
     onError: error => {
       console.log(error);
@@ -33,6 +39,8 @@ function useLogout(mutationOptions?: UseMutationCustomOptions) {
     mutationFn: logout,
     onSuccess: () => {
       removeLocalStorage(storageKeys.ACCESS_TOKEN);
+      removeHeader('Authorization');
+      queryClient.resetQueries({ queryKey: [queryKeys.AUTH] });
       console.log('로그아웃 성공');
     },
     onError: error => {

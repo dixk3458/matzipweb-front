@@ -2,7 +2,7 @@ import { MouseEvent } from 'react';
 import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import InputField from '../../../components/common/InputField/InputField';
 import useForm from '../../../hooks/useForm';
-import { validateSignup } from '../../../utils/validate';
+import { validateSignup } from '../../../utils';
 import styles from './SignupPage.module.css';
 import useAuth from '../../../hooks/queries/useAuth';
 import { useNavigate } from 'react-router-dom';

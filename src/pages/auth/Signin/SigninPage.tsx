@@ -3,7 +3,7 @@ import InputField from '../../../components/common/InputField/InputField';
 import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import styles from './SigninPage.module.css';
 import useForm from '../../../hooks/useForm';
-import { validateSignin } from '../../../utils/validate';
+import { validateSignin } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/queries/useAuth';
 import messages from '../../../constants/messages';
