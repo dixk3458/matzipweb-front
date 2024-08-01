@@ -1,5 +1,12 @@
+import useAuth from '../../../hooks/queries/useAuth';
+
 function MapHomePage() {
-  return <section></section>;
+  const { getProfileQuery } = useAuth();
+  return (
+    <section>
+      <p>ㅇㅇㅇ</p>
+    </section>
+  );
 }
 
 export default MapHomePage;

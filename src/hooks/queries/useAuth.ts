@@ -5,6 +5,7 @@ import {
   logout,
   postSignin,
   postSignup,
+  ResponseProfile,
 } from '../../apis/auth';
 import { UseMutationCustomOptions, UseQueryCustomOptions } from '../../types';
 import { queryKeys, storageKeys } from '../../constants/keys';
@@ -68,7 +69,7 @@ function useLogout(mutationOptions?: UseMutationCustomOptions) {
   });
 }
 
-function useGetProfile(queryOptions?: UseQueryCustomOptions) {
+function useGetProfile(queryOptions?: UseQueryCustomOptions<ResponseProfile>) {
   return useQuery({
     queryFn: getProfile,
     queryKey: [queryKeys.AUTH, queryKeys.GET_PROFILE],
@@ -91,7 +92,7 @@ function useGetRefreshToken() {
       setHeader('Authorization', `Bearer ${data.accessToken}`);
       setLocalStorage(storageKeys.ACCESS_TOKEN, data.accessToken);
     }
-  }, [isSuccess, data]);
+  }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
@@ -104,8 +105,8 @@ function useGetRefreshToken() {
 }
 
 function useAuth() {
-  const refreshTokenQuery = useGetRefreshToken();
   const signupMutation = useSignup();
+  const refreshTokenQuery = useGetRefreshToken();
   const signinMutation = useSignin();
   const logoutMutation = useLogout();
 
@@ -113,9 +114,9 @@ function useAuth() {
     enabled: refreshTokenQuery.isSuccess,
   });
 
-  const isLoginLoading =
-    refreshTokenQuery.isPending || getProfileQuery.isFetching;
   const isLogin = getProfileQuery.isSuccess;
+  const isLoginLoading =
+    refreshTokenQuery.isPending || getProfileQuery.isLoading;
 
   return {
     signupMutation,
@@ -126,4 +127,5 @@ function useAuth() {
     isLoginLoading,
   };
 }
+
 export default useAuth;

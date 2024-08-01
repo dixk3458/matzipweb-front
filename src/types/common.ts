@@ -21,6 +21,9 @@ type UseQueryCustomOptions<
   TError = ResponseError,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey
-> = Omit<UseQueryOptions, 'queryFn' | 'queryKey'>;
+> = Omit<
+  UseQueryOptions<TQueryFnData, ResponseError, TData, QueryKey>,
+  'queryFn' | 'queryKey'
+>;
 
 export type { UseMutationCustomOptions, UseQueryCustomOptions };
