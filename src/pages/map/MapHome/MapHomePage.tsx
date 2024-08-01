@@ -5,6 +5,7 @@ import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import PlusIcon from '../../../components/icon/PlusIcon';
 import PencilIcon from '../../../components/icon/PencilIcon';
 import MinusIcon from '../../../components/icon/MinusIcon';
+import styles from './MapHomePage.module.css';
 
 function MapHomePage() {
   const { getProfileQuery } = useAuth();
@@ -38,7 +39,7 @@ function MapHomePage() {
   };
 
   return (
-    <section>
+    <section className={styles.container}>
       <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY!}>
         <GoogleMap
           onLoad={map => {
@@ -54,7 +55,7 @@ function MapHomePage() {
         >
           {selectedLocation && <Marker position={selectedLocation} />}
         </GoogleMap>
-        <div>
+        <div className={styles.buttonContainer}>
           <CustomButton
             icon={<PlusIcon />}
             size="small"
@@ -81,7 +82,7 @@ function MapHomePage() {
 
 const containerStyle: React.CSSProperties = {
   width: '100%',
-  height: '100vh',
+  height: '100%',
 };
 
 const center = {

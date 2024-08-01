@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  position: relative;
+  flex: 1;
+}
+
+.buttonContainer {
+  background-color: rgba(var(--color-black), 0.5);
+  padding: 10px;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 12px;
+}
