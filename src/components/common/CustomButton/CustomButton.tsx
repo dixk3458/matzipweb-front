@@ -1,8 +1,9 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import styles from './CustomButton.module.css';
 
 interface CustomButtonProps {
-  label: string;
+  label?: string;
+  icon?: ReactNode;
   variant?: 'filled' | 'outlined';
   size?: 'small' | 'medium' | 'large';
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -10,6 +11,7 @@ interface CustomButtonProps {
 
 function CustomButton({
   label,
+  icon,
   variant = 'filled',
   size = 'medium',
   onClick,
@@ -19,7 +21,8 @@ function CustomButton({
       className={`${styles.container} ${styles[variant]} ${styles[size]}`}
       onClick={e => onClick(e)}
     >
-      <p className={styles.buttonText}>{label}</p>
+      {icon && icon}
+      {label && <p className={styles.buttonText}>{label}</p>}
     </button>
   );
 }
