@@ -18,6 +18,7 @@ function TextAreaField({
 }: TextAreaFieldProps) {
   return (
     <div className={`${styles.container} ${touched && error && styles.error}`}>
+      {error && touched && <p className={styles.errorText}>{error}</p>}
       <textarea
         placeholder="설명을 입력해 주세요"
         value={value}
@@ -27,7 +28,6 @@ function TextAreaField({
         onBlur={() => onBlur()}
         onChange={event => onChange(event)}
       />
-      {error && <p className={styles.errorText}>{error}</p>}
     </div>
   );
 }
