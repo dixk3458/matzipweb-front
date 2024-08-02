@@ -14,7 +14,7 @@ function useForm<T>({ initialValue, validate }: UseFormProps<T>) {
 
   const handleChangeValue = (
     name: keyof T,
-    e: ChangeEvent<HTMLInputElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setValues(prev => ({ ...prev, [name]: e.target.value }));
   };
@@ -26,7 +26,7 @@ function useForm<T>({ initialValue, validate }: UseFormProps<T>) {
   const getInputProps = (name: keyof T) => {
     const value = values[name];
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>) =>
+    const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       handleChangeValue(name, e);
 
     const onBlur = () => handleChangeTouched(name);

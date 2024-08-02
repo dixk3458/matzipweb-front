@@ -3,6 +3,11 @@ type UserInformation = {
   password: string;
 };
 
+type PostInformation = {
+  title: string;
+  description: string;
+};
+
 function validate(values: UserInformation) {
   const errors = {
     email: '',
@@ -37,6 +42,23 @@ function validateSignup(values: UserInformation & { confirmPassword: string }) {
   return newErrors;
 }
 
-export { validateSignin, validateSignup };
+function validateAddPost(values: PostInformation) {
+  const errors = {
+    title: '',
+    description: '',
+  };
+
+  if (values.title.length < 5) {
+    errors.title = '제목을 5자 이상으로 입력해 주세요.';
+  }
+
+  if (values.description.length < 5) {
+    errors.description = '설명을 5자 이상으로 입력해 주세요.';
+  }
+
+  return errors;
+}
+
+export { validateSignin, validateSignup, validateAddPost };
 
 export type { UserInformation };

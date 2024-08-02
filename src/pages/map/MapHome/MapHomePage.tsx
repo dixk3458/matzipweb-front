@@ -10,14 +10,20 @@ import { numbers } from '../../../constants';
 import useLocationStore from '../../../store/useLocationStore';
 import messages from '../../../constants/messages';
 import LocationIcon from '../../../components/icon/LocationIcon';
-import { useNavigate } from 'react-router-dom';
+import Modal from '../../../components/common/Modal/Modal';
+import AddPost from '../../../components/map/AddPost/AddPost';
 
 function MapHomePage() {
   const { getProfileQuery } = useAuth();
 
-  const navigation = useNavigate();
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const { currentLocation, setCurrentLocation } = useLocationStore();
+  const {
+    currentLocation,
+    selectedLocation,
+    setCurrentLocation,
+    setSelectedLocation,
+  } = useLocationStore();
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY ?? '',
@@ -32,9 +38,6 @@ function MapHomePage() {
   const onUnmount = useCallback(() => {
     setMap(null);
   }, []);
-
-  const [selectedLocation, setSelectedLocation] =
-    useState<google.maps.LatLngLiteral | null>(null);
 
   const handleClickMap = (event: google.maps.MapMouseEvent) => {
     if (event.latLng) {
@@ -55,7 +58,7 @@ function MapHomePage() {
   };
 
   const handleClickPencilButton = () => {
-    navigation('/new');
+    setIsOpenModal(true);
   };
 
   const handleClickLocationButton = () => {
@@ -145,6 +148,11 @@ function MapHomePage() {
           onClick={handleClickLocationButton}
         />
       </div>
+      {isOpenModal && (
+        <Modal onClose={() => setIsOpenModal(false)}>
+          <AddPost onClose={() => setIsOpenModal(false)} />
+        </Modal>
+      )}
     </section>
   );
 }

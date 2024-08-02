@@ -1,11 +1,13 @@
 :root {
-  --color-white: 255, 255, 255;
-  --color-black: 0, 0, 0;
+  --color-white: white;
+  --color-black: black;
   --color-gray-100: #f5f5f5;
   --color-gray-200: #ddd;
   --color-red-300: #ee3f4e;
   --color-blue-300: #007bff;
   --color-blue-400: #0056b3;
+
+  --color-black-rgb: 0, 0, 0;
 }
 
 * {

@@ -6,6 +6,7 @@ interface CustomButtonProps {
   icon?: ReactNode;
   variant?: 'filled' | 'outlined';
   size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -14,11 +15,15 @@ function CustomButton({
   icon,
   variant = 'filled',
   size = 'medium',
+  disabled = false,
   onClick,
 }: CustomButtonProps) {
   return (
     <button
-      className={`${styles.container} ${styles[variant]} ${styles[size]}`}
+      disabled={disabled}
+      className={`${styles.container} ${styles[variant]} ${styles[size]} ${
+        disabled && styles.disabled
+      }`}
       onClick={e => onClick(e)}
     >
       {icon && icon}
