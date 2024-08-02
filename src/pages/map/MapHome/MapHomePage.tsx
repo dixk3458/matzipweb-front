@@ -58,6 +58,10 @@ function MapHomePage() {
   };
 
   const handleClickPencilButton = () => {
+    if (!selectedLocation) {
+      alert(messages.NOT_SELECTED_LOCATION);
+      return;
+    }
     setIsOpenModal(true);
   };
 

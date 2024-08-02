@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import useForm from '../../../hooks/useForm';
 import useGetAddress from '../../../hooks/useGetAddress';
 import useLocationStore from '../../../store/useLocationStore';
-import { validateAddPost } from '../../../utils';
+import { formatDate, validateAddPost } from '../../../utils';
 import CustomButton from '../../common/CustomButton/CustomButton';
 import InputField from '../../common/InputField/InputField';
 import TextAreaField from '../../common/TextAreaField/TextAreaField';
@@ -11,6 +11,7 @@ import MarkerSelector from '../MarkerSelector/MarkerSelector';
 import styles from './AddPost.module.css';
 import { MarkerColor } from '../../../types';
 import { markerColor } from '../../../constants';
+import messages from '../../../constants/messages';
 
 interface AddPostProps {
   onClose: () => void;
@@ -33,7 +34,31 @@ function AddPost({ onClose }: AddPostProps) {
     markerColor.RED
   );
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const date = new Date();
+    const formattedDate = formatDate(date, '.');
+
+    const newValues = {
+      address,
+      markerColor: selectedMarkerColor,
+      date: formattedDate,
+      ...values,
+    };
+
+    if (
+      errors.title ||
+      errors.description ||
+      Object.values(newValues).some(data => !data)
+    ) {
+      alert(messages.INVALID_VALUE);
+      return;
+    }
+
+    console.log(newValues);
+    onClose();
+  };
 
   const handleUpdateMarkerColor = (color: MarkerColor) => {
     setSelectedMarkerColor(color);
@@ -69,7 +94,7 @@ function AddPost({ onClose }: AddPostProps) {
           label="POST"
           size="medium"
           variant="filled"
-          onClick={() => handleSubmit()}
+          onClick={e => handleSubmit(e)}
         />
       </form>
     </section>
