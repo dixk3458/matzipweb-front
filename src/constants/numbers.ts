@@ -3,6 +3,7 @@ const numbers = {
   ZOOM: 14,
   DEFAULT_LATITUDE: 37.5665,
   DEFAULT_LONGITUDE: 126.978,
+  DEFAULT_SCORE: 3,
 } as const;
 
 export { numbers };

@@ -10,8 +10,9 @@ import MapLocationIcon from '../../icon/MapLocationIcon';
 import MarkerSelector from '../MarkerSelector/MarkerSelector';
 import styles from './AddPost.module.css';
 import { MarkerColor } from '../../../types';
-import { markerColor } from '../../../constants';
+import { markerColor, numbers } from '../../../constants';
 import messages from '../../../constants/messages';
+import ScoreSelector from '../ScoreSelector/ScoreSelector';
 
 interface AddPostProps {
   onClose: () => void;
@@ -34,6 +35,10 @@ function AddPost({ onClose }: AddPostProps) {
     markerColor.RED
   );
 
+  const [selectedScore, setSelctedScore] = useState<number>(
+    numbers.DEFAULT_SCORE
+  );
+
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -43,6 +48,7 @@ function AddPost({ onClose }: AddPostProps) {
     const newValues = {
       address,
       markerColor: selectedMarkerColor,
+      score: selectedScore,
       date: formattedDate,
       ...values,
     };
@@ -62,6 +68,10 @@ function AddPost({ onClose }: AddPostProps) {
 
   const handleUpdateMarkerColor = (color: MarkerColor) => {
     setSelectedMarkerColor(color);
+  };
+
+  const handleUpdateScore = (score: number) => {
+    setSelctedScore(score);
   };
 
   return (
@@ -89,6 +99,10 @@ function AddPost({ onClose }: AddPostProps) {
         <MarkerSelector
           selectedMarkerColor={selectedMarkerColor}
           handleUpdateMarkerColor={handleUpdateMarkerColor}
+        />
+        <ScoreSelector
+          selectedScore={selectedScore}
+          handleUpdateScore={handleUpdateScore}
         />
         <CustomButton
           label="POST"
