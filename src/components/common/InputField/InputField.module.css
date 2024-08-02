@@ -21,6 +21,10 @@
   font-size: 16px;
 }
 
+.ellipsis {
+  text-overflow: ellipsis;
+}
+
 .errorText {
   font-size: 12px;
   color: var(--color-red-300);

@@ -1,4 +1,5 @@
 import useForm from '../../../hooks/useForm';
+import useGetAddress from '../../../hooks/useGetAddress';
 import useLocationStore from '../../../store/useLocationStore';
 import { validateAddPost } from '../../../utils';
 import CustomButton from '../../common/CustomButton/CustomButton';
@@ -12,10 +13,9 @@ interface AddPostProps {
 }
 
 function AddPost({ onClose }: AddPostProps) {
-  // 지도를 클릭하고 add를 하면
-  // AddPostModal이 보인다.
-
   const { selectedLocation } = useLocationStore();
+
+  const address = useGetAddress(selectedLocation!);
 
   const { values, touched, errors, getInputProps } = useForm({
     initialValue: {
@@ -33,7 +33,8 @@ function AddPost({ onClose }: AddPostProps) {
         <InputField
           disabled={true}
           type="text"
-          value={'dd'}
+          value={address ?? '주소를 불러오지 못했습니다.'}
+          ellipsis={true}
           icon={<MapLocationIcon />}
         />
         <InputField

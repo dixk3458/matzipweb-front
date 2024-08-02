@@ -8,6 +8,7 @@ interface InputFieldProps {
   touched?: boolean;
   error?: string;
   disabled?: boolean;
+  ellipsis?: boolean;
   icon?: ReactNode;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
@@ -21,6 +22,7 @@ function InputField({
   error,
   disabled = false,
   icon,
+  ellipsis = false,
   onChange,
   onBlur,
 }: InputFieldProps) {
@@ -34,7 +36,7 @@ function InputField({
       <div className={styles.inputContainer}>
         <input
           disabled={disabled}
-          className={styles.input}
+          className={`${styles.input} ${ellipsis && styles.ellipsis}`}
           type={type}
           value={value}
           placeholder={placeholder}
