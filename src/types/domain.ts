@@ -5,4 +5,6 @@ interface Profile {
   imageUri: string | null;
 }
 
-export type { Profile };
+type MarkerColor = 'RED' | 'BLUE' | 'GREEN' | 'YELLOW' | 'PURPLE';
+
+export type { Profile, MarkerColor };

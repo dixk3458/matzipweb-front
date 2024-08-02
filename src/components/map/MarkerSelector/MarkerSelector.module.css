@@ -1,0 +1,90 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.titleText {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 0;
+}
+
+.markerContainer {
+  display: flex;
+  justify-content: space-between;
+  overflow-x: auto;
+  border: 1px solid var(--color-gray-200);
+  padding: 10px;
+}
+
+.list {
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 80px; /* 모든 요소의 너비를 동일하게 설정 */
+}
+
+.selectedList {
+  border: 2px solid;
+  border-radius: 4px;
+}
+
+.color {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.colorText {
+  font-size: 12px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%; /* 모든 텍스트 요소의 너비를 동일하게 설정 */
+  text-align: center;
+}
+
+.REDList {
+  border-color: var(--color-pink-700);
+}
+
+.BLUEList {
+  border-color: var(--color-indigo-700);
+}
+
+.YELLOWList {
+  border-color: var(--color-yellow-700);
+}
+
+.GREENList {
+  border-color: var(--color-green-700);
+}
+
+.PURPLEList {
+  border-color: var(--color-purple-700);
+}
+
+.RED {
+  background-color: var(--color-pink-700);
+}
+
+.BLUE {
+  background-color: var(--color-indigo-700);
+}
+
+.YELLOW {
+  background-color: var(--color-yellow-700);
+}
+
+.GREEN {
+  background-color: var(--color-green-700);
+}
+
+.PURPLE {
+  background-color: var(--color-purple-700);
+}

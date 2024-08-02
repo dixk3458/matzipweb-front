@@ -7,6 +7,12 @@
   --color-blue-300: #007bff;
   --color-blue-400: #0056b3;
 
+  --color-pink-700: #ec4853;
+  --color-indigo-700: #4338ca;
+  --color-yellow-700: #f6e52d;
+  --color-green-700: #10b981;
+  --color-purple-700: #8b5cf6;
+
   --color-black-rgb: 0, 0, 0;
 }
 
@@ -26,4 +32,12 @@ body,
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
 }

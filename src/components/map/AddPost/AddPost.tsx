@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useForm from '../../../hooks/useForm';
 import useGetAddress from '../../../hooks/useGetAddress';
 import useLocationStore from '../../../store/useLocationStore';
@@ -6,7 +7,10 @@ import CustomButton from '../../common/CustomButton/CustomButton';
 import InputField from '../../common/InputField/InputField';
 import TextAreaField from '../../common/TextAreaField/TextAreaField';
 import MapLocationIcon from '../../icon/MapLocationIcon';
+import MarkerSelector from '../MarkerSelector/MarkerSelector';
 import styles from './AddPost.module.css';
+import { MarkerColor } from '../../../types';
+import { markerColor } from '../../../constants';
 
 interface AddPostProps {
   onClose: () => void;
@@ -25,7 +29,15 @@ function AddPost({ onClose }: AddPostProps) {
     validate: validateAddPost,
   });
 
+  const [selectedMarkerColor, setSelectedMarkerColor] = useState<MarkerColor>(
+    markerColor.RED
+  );
+
   const handleSubmit = () => {};
+
+  const handleUpdateMarkerColor = (color: MarkerColor) => {
+    setSelectedMarkerColor(color);
+  };
 
   return (
     <section className={styles.container}>
@@ -48,6 +60,10 @@ function AddPost({ onClose }: AddPostProps) {
           error={errors.description}
           touched={touched.description}
           {...getInputProps('description')}
+        />
+        <MarkerSelector
+          selectedMarkerColor={selectedMarkerColor}
+          handleUpdateMarkerColor={handleUpdateMarkerColor}
         />
         <CustomButton
           label="POST"
