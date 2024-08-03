@@ -1,3 +1,5 @@
+type MarkerColor = 'RED' | 'BLUE' | 'GREEN' | 'YELLOW' | 'PURPLE';
+
 interface Profile {
   id: string;
   email: string;
@@ -5,6 +7,24 @@ interface Profile {
   imageUri: string | null;
 }
 
-type MarkerColor = 'RED' | 'BLUE' | 'GREEN' | 'YELLOW' | 'PURPLE';
+interface ImageUri {
+  id?: number;
+  uri: string;
+}
 
-export type { Profile, MarkerColor };
+interface Marker {
+  id: number;
+  latitude: number;
+  longitude: number;
+  color: MarkerColor;
+  score: number;
+}
+
+interface Post extends Marker {
+  id: number;
+  address: string;
+  title: string;
+  description: string;
+}
+
+export type { MarkerColor, Profile, ImageUri, Marker, Post };

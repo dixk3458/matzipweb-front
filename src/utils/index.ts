@@ -3,3 +3,4 @@ export * from './validate';
 export * from './header';
 export * from './localStorage';
 export * from './date';
+export * from './uuid';
