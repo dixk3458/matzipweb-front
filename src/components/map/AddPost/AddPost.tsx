@@ -2,7 +2,7 @@ import { ChangeEvent, MouseEvent, useState } from 'react';
 import useForm from '../../../hooks/useForm';
 import useGetAddress from '../../../hooks/useGetAddress';
 import useLocationStore from '../../../store/useLocationStore';
-import { formatDate, validateAddPost } from '../../../utils';
+import { validateAddPost } from '../../../utils';
 import CustomButton from '../../common/CustomButton/CustomButton';
 import InputField from '../../common/InputField/InputField';
 import TextAreaField from '../../common/TextAreaField/TextAreaField';
@@ -12,17 +12,18 @@ import { ImageUri, MarkerColor } from '../../../types';
 import { markerColor, numbers } from '../../../constants';
 import messages from '../../../constants/messages';
 import ScoreSelector from '../ScoreSelector/ScoreSelector';
-import XIcon from '../../icon/XIcon';
-import PlusIcon from '../../icon/PlusIcon';
 
 import styles from './AddPost.module.css';
 import ImageSelector from '../ImageSelector/ImageSelector';
+import useMutateCreatePost from '../../../hooks/queries/useMutateCreatePost';
 
 interface AddPostProps {
   onClose: () => void;
 }
 
 function AddPost({ onClose }: AddPostProps) {
+  const createPost = useMutateCreatePost();
+
   const { selectedLocation } = useLocationStore();
   const address = useGetAddress(selectedLocation!);
   const { values, touched, errors, getInputProps } = useForm({
@@ -69,28 +70,40 @@ function AddPost({ onClose }: AddPostProps) {
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const date = new Date();
-    const formattedDate = formatDate(date, '.');
+    const location = {
+      latitude: selectedLocation!.lat,
+      longitude: selectedLocation!.lng,
+    };
 
-    const newValues = {
-      address,
-      markerColor: selectedMarkerColor,
-      score: selectedScore,
-      date: formattedDate,
+    const body = {
       ...values,
+      address: address,
+      color: selectedMarkerColor,
+      score: selectedScore,
     };
 
     if (
       errors.title ||
       errors.description ||
-      Object.values(newValues).some(data => !data)
+      !location.latitude ||
+      !location.longitude ||
+      Object.values(body).some(data => !data)
     ) {
       alert(messages.INVALID_VALUE);
       return;
     }
 
-    console.log(newValues);
-    onClose();
+    createPost.mutate(
+      { ...body, ...location, imageUris: selectedImageUris },
+      {
+        onSuccess: () => {
+          onClose();
+        },
+        onError: error => {
+          console.log(error);
+        },
+      }
+    );
   };
 
   return (
