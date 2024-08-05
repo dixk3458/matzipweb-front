@@ -29,7 +29,22 @@
 .buttonContainer {
   display: flex;
   gap: 10px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+}
+
+.buttonListItem {
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+}
+
+.buttonListItemText {
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.active,
+.buttonListItemText:hover {
+  border-bottom: 2px solid var(--color-indigo-700);
+  color: var(--color-indigo-700);
 }

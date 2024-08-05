@@ -9,7 +9,7 @@ function useGetAllMarkersByUserId(
 ) {
   return useQuery({
     queryFn: () => getAllMarkersByUserId(userId),
-    queryKey: [queryKeys.MARKER, queryKeys.GET_MARKERS],
+    queryKey: [userId, queryKeys.MARKER, queryKeys.GET_MARKERS],
     ...queryOptions,
   });
 }

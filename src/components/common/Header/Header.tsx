@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
-import styles from './Header.module.css';
+import { Link, useLocation } from 'react-router-dom';
 import useAuth from '../../../hooks/queries/useAuth';
 import CustomButton from '../CustomButton/CustomButton';
+
+import styles from './Header.module.css';
 
 function Header() {
   const { isLogin, logoutMutation } = useAuth();
@@ -9,6 +10,9 @@ function Header() {
   const handleClickLogoutButton = () => {
     logoutMutation.mutate(null);
   };
+
+  const { pathname } = useLocation();
+  console.log(pathname);
 
   return (
     <header className={styles.container}>
@@ -22,6 +26,26 @@ function Header() {
       </Link>
       {isLogin && (
         <ul className={styles.buttonContainer}>
+          <li className={styles.buttonListItem}>
+            <Link
+              className={`${styles.buttonListItemText} ${
+                pathname === '/map' && styles.active
+              }`}
+              to={'/map'}
+            >
+              Map
+            </Link>
+          </li>
+          <li className={styles.buttonListItem}>
+            <Link
+              className={`${styles.buttonListItemText} ${
+                pathname === '/feed' && styles.active
+              }`}
+              to={'/feed'}
+            >
+              Feed
+            </Link>
+          </li>
           <li>
             <CustomButton
               label="로그아웃"

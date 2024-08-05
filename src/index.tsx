@@ -9,6 +9,7 @@ import SignupPage from './pages/auth/Signup/SignupPage';
 import MapHomePage from './pages/map/MapHome/MapHomePage';
 import HomePage from './pages/home/Home/HomePage';
 import PrivateRoute from './components/common/PrivateRoute/PrivateRoute';
+import FeedHomePage from './pages/feed/FeedHome/FeedHomePage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -32,10 +33,18 @@ const router = createBrowserRouter([
         element: <SignupPage />,
       },
       {
-        path: '/home',
+        path: '/map',
         element: (
           <PrivateRoute>
             <MapHomePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/feed',
+        element: (
+          <PrivateRoute>
+            <FeedHomePage />
           </PrivateRoute>
         ),
       },
