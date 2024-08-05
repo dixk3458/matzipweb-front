@@ -13,6 +13,7 @@ import LocationIcon from '../../../components/icon/LocationIcon';
 import Modal from '../../../components/common/Modal/Modal';
 import AddPost from '../../../components/map/AddPost/AddPost';
 import useGetAllMarkersByUserId from '../../../hooks/queries/useGetAllMarkersByUserId';
+import CustomMarker from '../../../components/map/CustomMarker/CustomMarker';
 
 function MapHomePage() {
   const { getProfileQuery } = useAuth();
@@ -140,10 +141,12 @@ function MapHomePage() {
         {selectedLocation && <MarkerF position={selectedLocation} />}
         {markers.length > 0 &&
           markers.map(marker => (
-            <MarkerF
+            <CustomMarker
               key={marker.id}
+              id={marker.id}
               position={{ lat: marker.latitude, lng: marker.longitude }}
-              // Additional properties like color can be set here
+              color={marker.color}
+              score={marker.score}
             />
           ))}
       </GoogleMap>

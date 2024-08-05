@@ -1,0 +1,12 @@
+.markerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.scoreText {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+}
