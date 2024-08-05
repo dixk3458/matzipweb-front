@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api';
 import useAuth from '../../../hooks/queries/useAuth';
 import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import PlusIcon from '../../../components/icon/PlusIcon';
@@ -12,9 +12,14 @@ import messages from '../../../constants/messages';
 import LocationIcon from '../../../components/icon/LocationIcon';
 import Modal from '../../../components/common/Modal/Modal';
 import AddPost from '../../../components/map/AddPost/AddPost';
+import useGetAllMarkersByUserId from '../../../hooks/queries/useGetAllMarkersByUserId';
 
 function MapHomePage() {
   const { getProfileQuery } = useAuth();
+  const { id: userId } = getProfileQuery.data! || {};
+
+  const markers = useGetAllMarkersByUserId(userId).data || [];
+  console.log(markers);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -123,8 +128,24 @@ function MapHomePage() {
           disableDefaultUI: true,
         }}
       >
-        {currentLocation && <Marker position={currentLocation} />}
-        {selectedLocation && <Marker position={selectedLocation} />}
+        {currentLocation && (
+          <MarkerF
+            position={currentLocation}
+            icon={{
+              url: '/assets/cloudLogo.png',
+              scaledSize: new google.maps.Size(40, 40),
+            }}
+          />
+        )}
+        {selectedLocation && <MarkerF position={selectedLocation} />}
+        {markers.length > 0 &&
+          markers.map(marker => (
+            <MarkerF
+              key={marker.id}
+              position={{ lat: marker.latitude, lng: marker.longitude }}
+              // Additional properties like color can be set here
+            />
+          ))}
       </GoogleMap>
       <div className={styles.buttonContainer}>
         <CustomButton

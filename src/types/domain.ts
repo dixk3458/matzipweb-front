@@ -1,7 +1,7 @@
 type MarkerColor = 'RED' | 'BLUE' | 'GREEN' | 'YELLOW' | 'PURPLE';
 
 interface Profile {
-  id: string;
+  id: number;
   email: string;
   nickname: string | null;
   imageUri: string | null;
