@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import InputField from '../../../components/common/InputField/InputField';
 import useForm from '../../../hooks/useForm';
@@ -11,7 +11,7 @@ import messages from '../../../constants/messages';
 function SignupPage() {
   const navigation = useNavigate();
 
-  const { signupMutation } = useAuth();
+  const { isLogin, signupMutation } = useAuth();
 
   // useForm() 훅
   const { values, touched, errors, getInputProps } = useForm({
@@ -39,6 +39,12 @@ function SignupPage() {
       }
     );
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      navigation('/map');
+    }
+  }, [isLogin, navigation]);
 
   return (
     <section className={styles.container}>

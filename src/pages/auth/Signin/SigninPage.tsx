@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import InputField from '../../../components/common/InputField/InputField';
 import CustomButton from '../../../components/common/CustomButton/CustomButton';
 import styles from './SigninPage.module.css';
@@ -12,7 +12,7 @@ function SigninPage() {
   const navigation = useNavigate();
 
   // useAuth() 커스텀 훅
-  const { signinMutation } = useAuth();
+  const { isLogin, signinMutation } = useAuth();
 
   // useForm() 커스텀 훅
   const { values, errors, touched, getInputProps } = useForm({
@@ -40,6 +40,12 @@ function SigninPage() {
       }
     );
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      navigation('/map');
+    }
+  }, [isLogin, navigation]);
 
   return (
     <section className={styles.container}>

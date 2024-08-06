@@ -12,7 +12,6 @@ function Header() {
   };
 
   const { pathname } = useLocation();
-  console.log(pathname);
 
   return (
     <header className={styles.container}>

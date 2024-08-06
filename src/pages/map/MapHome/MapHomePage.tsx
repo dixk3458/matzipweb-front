@@ -20,7 +20,6 @@ function MapHomePage() {
   const { id: userId } = getProfileQuery.data! || {};
 
   const markers = useGetAllMarkersByUserId(userId).data || [];
-  console.log(markers);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 

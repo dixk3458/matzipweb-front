@@ -5,9 +5,11 @@ function FeedHomePage() {
   const { getProfileQuery } = useAuth();
   const { id: userId } = getProfileQuery.data! || {};
 
-  const feeds = useGetAllPostsByUserId(userId).data;
+  const { data: feeds, isLoading, error } = useGetAllPostsByUserId(userId);
 
-  console.log(feeds && feeds[0]);
+  if (isLoading) {
+    return <p>로딩중...</p>;
+  }
   return <section>FeedHome</section>;
 }
 
