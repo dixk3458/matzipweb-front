@@ -8,7 +8,7 @@ import InputField from '../../common/InputField/InputField';
 import TextAreaField from '../../common/TextAreaField/TextAreaField';
 import MapLocationIcon from '../../icon/MapLocationIcon';
 import MarkerSelector from '../MarkerSelector/MarkerSelector';
-import { ImageUri, MarkerColor } from '../../../types';
+import { MarkerColor } from '../../../types';
 import { markerColor, numbers } from '../../../constants';
 import messages from '../../../constants/messages';
 import ScoreSelector from '../ScoreSelector/ScoreSelector';
@@ -16,12 +16,15 @@ import ScoreSelector from '../ScoreSelector/ScoreSelector';
 import styles from './AddPost.module.css';
 import ImageSelector from '../ImageSelector/ImageSelector';
 import useMutateCreatePost from '../../../hooks/queries/useMutateCreatePost';
+import useMutateUploadImages from '../../../hooks/queries/useMutateUploadImages';
 
 interface AddPostProps {
   onClose: () => void;
 }
 
 function AddPost({ onClose }: AddPostProps) {
+  const uploadImages = useMutateUploadImages();
+
   const createPost = useMutateCreatePost();
 
   const { selectedLocation } = useLocationStore();
@@ -34,7 +37,7 @@ function AddPost({ onClose }: AddPostProps) {
     validate: validateAddPost,
   });
 
-  const [selectedImageUris, setSelectedImageUris] = useState<ImageUri[]>([]);
+  const [selectedImageFiles, setselectedImageFiles] = useState<File[]>([]);
   const [selectedMarkerColor, setSelectedMarkerColor] = useState<MarkerColor>(
     markerColor.RED
   );
@@ -43,20 +46,22 @@ function AddPost({ onClose }: AddPostProps) {
   );
 
   const handleChangeImageFile = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files ?? []).map(file => ({
-      uri: URL.createObjectURL(file),
-    })); // input으로 등록된 이미지 Uri 배열 생성
+    const files = Array.from(event.target.files ?? []);
 
-    if (files.length + selectedImageUris.length > 5) {
+    if (files.length + selectedImageFiles.length > 5) {
       alert(messages.EXCEEDED_FILE_COUNT);
       return;
     }
 
-    setSelectedImageUris([...selectedImageUris, ...files]);
+    setselectedImageFiles([...selectedImageFiles, ...files]);
   };
 
   const handleRemoveImage = (uri: string) => {
-    setSelectedImageUris(selectedImageUris.filter(image => image.uri !== uri));
+    const filtered = selectedImageFiles.filter(
+      imageFile => URL.createObjectURL(imageFile) !== uri
+    );
+
+    return filtered;
   };
 
   const handleUpdateMarkerColor = (color: MarkerColor) => {
@@ -93,17 +98,35 @@ function AddPost({ onClose }: AddPostProps) {
       return;
     }
 
-    createPost.mutate(
-      { ...body, ...location, imageUris: selectedImageUris },
-      {
-        onSuccess: () => {
-          onClose();
-        },
-        onError: error => {
-          console.log(error);
-        },
-      }
-    );
+    // 서버에 업로드할 이미지 파일들을 만듬
+    const formData = new FormData();
+    selectedImageFiles.forEach(imageFile => {
+      formData.append('files', imageFile);
+    });
+
+    uploadImages.mutate(formData, {
+      onSuccess: imageUris => {
+        console.log('성공?');
+        createPost.mutate(
+          {
+            ...body,
+            ...location,
+            imageUris,
+          },
+          {
+            onSuccess: () => {
+              onClose();
+            },
+            onError: error => {
+              console.log(error);
+            },
+          }
+        );
+      },
+      onError: error => {
+        console.log('이미지 업로드 실패');
+      },
+    });
   };
 
   return (
@@ -129,7 +152,7 @@ function AddPost({ onClose }: AddPostProps) {
           {...getInputProps('description')}
         />
         <ImageSelector
-          selectedImageUris={selectedImageUris}
+          selectedImageFiles={selectedImageFiles}
           handleRemoveImage={handleRemoveImage}
           handleChangeImageFile={handleChangeImageFile}
         />

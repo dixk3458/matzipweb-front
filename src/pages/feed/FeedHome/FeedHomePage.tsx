@@ -7,7 +7,7 @@ function FeedHomePage() {
 
   const feeds = useGetAllPostsByUserId(userId).data;
 
-  console.log(feeds && feeds[0].author);
+  console.log(feeds && feeds[0]);
   return <section>FeedHome</section>;
 }
 

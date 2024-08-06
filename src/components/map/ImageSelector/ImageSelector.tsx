@@ -1,17 +1,16 @@
 import { ChangeEvent } from 'react';
-import { ImageUri } from '../../../types';
 import PlusIcon from '../../icon/PlusIcon';
 import XIcon from '../../icon/XIcon';
 import styles from './ImageSelector.module.css';
 
 interface ImageSelectorProps {
-  selectedImageUris: ImageUri[];
+  selectedImageFiles: File[];
   handleRemoveImage: (uri: string) => void;
   handleChangeImageFile: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function ImageSelector({
-  selectedImageUris,
+  selectedImageFiles,
   handleRemoveImage,
   handleChangeImageFile,
 }: ImageSelectorProps) {
@@ -19,25 +18,25 @@ function ImageSelector({
     <section className={styles.container}>
       <p className={styles.titleText}>사진 추가</p>
       <div>
-        {selectedImageUris.length > 0 && (
+        {selectedImageFiles.length > 0 && (
           <ul className={styles.imagePreviewContainer}>
-            {selectedImageUris.map((image, index) => (
-              <li key={image.id ?? index} className={styles.imagePreview}>
+            {selectedImageFiles.map((file, index) => (
+              <li key={index} className={styles.imagePreview}>
                 <img
-                  src={image.uri}
+                  src={URL.createObjectURL(file)}
                   alt={`preview-${index}`}
                   className={styles.image}
                 />
                 <button
                   className={styles.removeButton}
                   type="button"
-                  onClick={() => handleRemoveImage(image.uri)}
+                  onClick={() => handleRemoveImage(URL.createObjectURL(file))}
                 >
                   <XIcon />
                 </button>
               </li>
             ))}
-            {selectedImageUris.length < 5 && (
+            {selectedImageFiles.length < 5 && (
               <li className={styles.imagePreview}>
                 <label htmlFor="image-upload" className={styles.plusButton}>
                   <PlusIcon />
@@ -54,7 +53,7 @@ function ImageSelector({
             )}
           </ul>
         )}
-        {selectedImageUris.length === 0 && (
+        {selectedImageFiles.length === 0 && (
           <label htmlFor="image-upload" className={styles.plusButton}>
             <PlusIcon />
             <input
