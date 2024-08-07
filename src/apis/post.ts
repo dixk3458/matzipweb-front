@@ -1,7 +1,10 @@
 import { ImageUri, Post } from '../types';
 import axiosInstance from './axios';
 
-type RequestCreatePost = Omit<Post, 'id' | 'author'> & {
+type RequestCreatePost = Omit<
+  Post,
+  'id' | 'author' | 'images' | 'createdDate'
+> & {
   imageUris: ImageUri[];
 };
 

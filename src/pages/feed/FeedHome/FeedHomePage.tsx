@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import useAuth from '../../../hooks/queries/useAuth';
 import useGetAllPostsByUserId from '../../../hooks/queries/useGetAllPostsByUserId';
+
+import styles from './FeedHomePage.module.css';
 
 function FeedHomePage() {
   const { getProfileQuery } = useAuth();
@@ -10,7 +13,17 @@ function FeedHomePage() {
   if (isLoading) {
     return <p>로딩중...</p>;
   }
-  return <section>FeedHome</section>;
+
+  if (!isLoading && error) {
+    return <p>에러...</p>;
+  }
+
+  if (!isLoading && !error && feeds && feeds.length === 0) {
+    return <p>피드가 없습니다.</p>;
+  }
+
+  console.log(feeds);
+  return <section className={styles.feedContainer}></section>;
 }
 
 export default FeedHomePage;

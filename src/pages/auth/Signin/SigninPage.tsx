@@ -31,7 +31,7 @@ function SigninPage() {
       {
         onSuccess: () => {
           alert(messages.SUCCESS_SIGNIN);
-          navigation('/home');
+          navigation('/map');
         },
         onError: error => {
           console.log(error);

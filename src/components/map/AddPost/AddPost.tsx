@@ -106,7 +106,7 @@ function AddPost({ onClose }: AddPostProps) {
 
     uploadImages.mutate(formData, {
       onSuccess: imageUris => {
-        console.log('성공?');
+        console.log('이미지 업로드 성공');
         createPost.mutate(
           {
             ...body,

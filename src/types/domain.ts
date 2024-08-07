@@ -26,6 +26,8 @@ interface Post extends Marker {
   title: string;
   description: string;
   author: Profile;
+  createdDate: Date;
+  images: ImageUri[];
 }
 
 export type { MarkerColor, Profile, ImageUri, Marker, Post };
