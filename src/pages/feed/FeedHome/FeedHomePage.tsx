@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import useAuth from '../../../hooks/queries/useAuth';
 import useGetAllPostsByUserId from '../../../hooks/queries/useGetAllPostsByUserId';
 
 import styles from './FeedHomePage.module.css';
+import FeedCard from '../../../components/feed/FeedCard/FeedCard';
 
 function FeedHomePage() {
   const { getProfileQuery } = useAuth();
@@ -23,7 +23,18 @@ function FeedHomePage() {
   }
 
   console.log(feeds);
-  return <section className={styles.feedContainer}></section>;
+  return (
+    <section className={styles.container}>
+      <ul className={styles.feedContainer}>
+        {feeds &&
+          feeds.map((feed, index) => (
+            <li key={feed.id}>
+              <FeedCard feed={feed} />
+            </li>
+          ))}
+      </ul>
+    </section>
+  );
 }
 
 export default FeedHomePage;
