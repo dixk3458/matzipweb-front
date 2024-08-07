@@ -10,6 +10,7 @@ import MapHomePage from './pages/map/MapHome/MapHomePage';
 import HomePage from './pages/home/Home/HomePage';
 import PrivateRoute from './components/common/PrivateRoute/PrivateRoute';
 import FeedHomePage from './pages/feed/FeedHome/FeedHomePage';
+import FeedDetailPage from './pages/feed/FeedDetail/FeedDetailPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <FeedHomePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/feed/:id',
+        element: (
+          <PrivateRoute>
+            <FeedDetailPage />
           </PrivateRoute>
         ),
       },

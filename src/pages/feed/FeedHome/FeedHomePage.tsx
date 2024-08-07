@@ -3,6 +3,7 @@ import useGetAllPostsByUserId from '../../../hooks/queries/useGetAllPostsByUserI
 
 import styles from './FeedHomePage.module.css';
 import FeedCard from '../../../components/feed/FeedCard/FeedCard';
+import { Link } from 'react-router-dom';
 
 function FeedHomePage() {
   const { getProfileQuery } = useAuth();
@@ -29,7 +30,9 @@ function FeedHomePage() {
         {feeds &&
           feeds.map((feed, index) => (
             <li key={feed.id}>
-              <FeedCard feed={feed} />
+              <Link to={`/feed/${feed.id}`} state={{ feedId: feed.id }}>
+                <FeedCard feed={feed} />
+              </Link>
             </li>
           ))}
       </ul>

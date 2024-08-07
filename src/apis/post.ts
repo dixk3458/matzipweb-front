@@ -8,7 +8,7 @@ type RequestCreatePost = Omit<
   imageUris: ImageUri[];
 };
 
-type ResponsePost = Post & { images: ImageUri[] };
+type ResponsePost = Post;
 
 async function createPost(body: RequestCreatePost): Promise<ResponsePost> {
   const { data } = await axiosInstance.post('/post', body);
@@ -16,11 +16,17 @@ async function createPost(body: RequestCreatePost): Promise<ResponsePost> {
   return data;
 }
 
-async function getAllPostsByUserId(userId: number): Promise<Post[]> {
+async function getAllPostsByUserId(userId: number): Promise<ResponsePost[]> {
   const { data } = await axiosInstance.get(`/posts?userId=${userId}`);
 
   return data;
 }
 
-export { createPost, getAllPostsByUserId };
+async function getPostByPostId(postId: number): Promise<ResponsePost> {
+  const { data } = await axiosInstance.get(`/post?postId=${postId}`);
+
+  return data;
+}
+
+export { createPost, getAllPostsByUserId, getPostByPostId };
 export type { RequestCreatePost, ResponsePost };

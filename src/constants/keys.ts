@@ -5,11 +5,13 @@ const storageKeys = {
 const queryKeys = {
   AUTH: 'auth',
   MARKER: 'marker',
-  POSTS:'posts',
+  POST: 'post',
+  POSTS: 'posts',
   GET_PROFILE: 'getProfile',
   GET_ACCESS_TOKEN: 'getAccessToken',
   GET_MARKERS: 'getMarkers',
-  GET_POSTS:'getPosts'
+  GET_POST: 'getPost',
+  GET_POSTS: 'getPosts',
 };
 
 export { storageKeys, queryKeys };

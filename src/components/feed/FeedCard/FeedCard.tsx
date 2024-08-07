@@ -11,7 +11,7 @@ function FeedCard({ feed }: FeedCardProps) {
   const { title, description, images, score, color } = feed;
   return (
     <div className={styles.container}>
-      <img src={images[0].uri} alt={`${title}-feed image`} />
+      <img src={images[0].uri} alt={`${title}-feed`} />
       <div className={styles.infoTextContainer}>
         <p className={styles.titleText}>{title}</p>
         <div className={styles.metaContainer}>
