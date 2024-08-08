@@ -1,4 +1,5 @@
 import useGetAllCommentsByPostId from '../../../hooks/queries/useGetAllCommentsByPostId';
+import ProfileCard from '../../common/ProfileCard/ProfileCard';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
 import styles from './CommentList.module.css';
@@ -10,17 +11,18 @@ interface CommentListProps {
 function CommentList({ postId }: CommentListProps) {
   const { data: comments, isLoading } = useGetAllCommentsByPostId(postId);
 
-  console.log(comments);
   return (
     <>
-      <div className={styles.commentsSection}>
-        <h2>Comments</h2>
-        <ul className={styles.commentList}>
-          {comments &&
-            comments.length > 0 &&
-            comments.map(comment => <li key={comment.id}>{comment.text}</li>)}
-        </ul>
-      </div>
+      <ul className={styles.commentList}>
+        {comments &&
+          comments.length > 0 &&
+          comments.map(({ author, id, text }) => (
+            <li key={id} className={styles.commentItem}>
+              <ProfileCard user={author} />
+              <p className={styles.commentText}>{text}</p>
+            </li>
+          ))}
+      </ul>
       <AddCommentForm postId={postId} />
     </>
   );

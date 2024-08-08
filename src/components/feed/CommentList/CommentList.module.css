@@ -1,12 +1,24 @@
-.commentsSection {
+.commentList {
+  border: 1px solid var(--color-gray-200);
+  padding: 10px;
+  margin: 0;
+  height: 120px;
+  max-height: 120px;
   overflow-y: auto;
 }
 
-.commentList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  height: 100px;
-  max-height: 100px;
-  overflow-y: auto;
+.commentItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 4px;
+  padding: 4px 0;
+  margin: 4px 0;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.commentText {
+  color: var(--color-black);
+  font-size: 12px;
+  word-wrap: break-word;
 }

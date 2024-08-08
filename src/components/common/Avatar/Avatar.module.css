@@ -1,0 +1,32 @@
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: var(--color-gray-200);
+}
+
+.placeholderImage {
+  text-align: center;
+  line-height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.small {
+  width: 30px;
+  height: 30px;
+}
+
+.medium {
+  width: 60px;
+  height: 60px;
+}
+
+.large {
+  width: 100px;
+  height: 100px;
+}

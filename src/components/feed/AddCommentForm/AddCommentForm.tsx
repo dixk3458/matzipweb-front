@@ -18,8 +18,13 @@ function AddCommentForm({ postId }: AddCommentFormProps) {
   const handleSubmitComment = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
+    if (text.trim().length === 0) {
+      alert('잘못된 입력입니다.');
+      return;
+    }
+
     addComment.mutate(
-      { text: text },
+      { text: text.trim() },
       {
         onSuccess: () => {
           console.log('댓글 성공');
