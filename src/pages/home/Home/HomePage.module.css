@@ -1,12 +1,15 @@
 /* src/pages/landing/HomePage.module.css */
 
 .container {
+  flex: 1;
+  max-width: 1200px;
+  margin: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   padding: 20px;
-  background-color: #f0f0f0;
-  flex: 1;
 }
 
 .descriptionText {

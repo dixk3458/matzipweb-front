@@ -26,7 +26,7 @@ interface Post extends Marker {
   title: string;
   description: string;
   author: Profile;
-  createdDate: Date;
+  createdDate: Date | string;
   images: ImageUri[];
 }
 

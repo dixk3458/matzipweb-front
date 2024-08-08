@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPostByPostId } from '../../apis';
 import { queryKeys } from '../../constants';
-import { UseQueryCustomOptions } from '../../types';
+import { Post, UseQueryCustomOptions } from '../../types';
 
 function useGetPostByPostId(
   postId: number,
-  queryOptions?: UseQueryCustomOptions
+  queryOptions?: UseQueryCustomOptions<Post>
 ) {
   return useQuery({
     queryFn: () => getPostByPostId(postId),
@@ -14,5 +14,4 @@ function useGetPostByPostId(
   });
 }
 
-
-export default useGetPostByPostId
+export default useGetPostByPostId;

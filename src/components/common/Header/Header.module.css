@@ -1,11 +1,10 @@
-/* src/components/Header.module.css */
 .container {
+  max-width: 1200px;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-gray-200);
 }
 
 .logoContainer {

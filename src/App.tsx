@@ -8,8 +8,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        <Header />
-        <Outlet />
+        <div className="wrapper-header">
+          <Header />
+        </div>
+        <div className="wrapper-outlet">
+          <Outlet />
+        </div>
       </div>
     </QueryClientProvider>
   );

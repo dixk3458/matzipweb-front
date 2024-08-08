@@ -5,7 +5,7 @@ const messages = {
   CAN_NOT_GET_GEOLOCATION: '위치정보를 가져오는 도중 실패했습니다.',
   NOT_SUPPORTED_GEOLOCATION: '위치서비스를 지원하지 않습니다.',
   CANT_NOT_GET_ADDRESS: '주소를 가져오는 도중 실패했습니다.',
-  INVALID_VALUE: '유효하지 않은 값입니다..',
+  INVALID_VALUE: '유효하지 않은 값입니다.',
   EXCEEDED_FILE_COUNT: '파일 개수를 초과했습니다. (최대 5개)',
 } as const;
 
