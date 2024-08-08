@@ -97,7 +97,7 @@ function FeedDetailPage() {
           <h2>Comments</h2>
           <ul className={styles.commentList}></ul>
         </div>
-        <AddCommentForm />
+        <AddCommentForm postId={feedId} />
       </div>
     </section>
   );
