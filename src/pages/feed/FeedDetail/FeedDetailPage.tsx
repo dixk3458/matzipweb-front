@@ -4,9 +4,10 @@ import messages from '../../../constants/messages';
 import { useEffect, useState } from 'react';
 import { ImageUri } from '../../../types';
 import { formatDate } from '../../../utils';
-import AddCommentForm from '../../../components/feed/AddCommentForm/AddCommentForm';
 import ActionBar from '../../../components/feed/ActionBar/ActionBar';
 import MarkerIcon from '../../../components/icon/MarkerIcon';
+import CommentList from '../../../components/feed/CommentList/CommentList';
+
 import styles from './FeedDetail.module.css';
 
 function FeedDetailPage() {
@@ -93,11 +94,7 @@ function FeedDetailPage() {
           <MarkerIcon color={color} size={24} />
         </div>
         <ActionBar />
-        <div className={styles.commentsSection}>
-          <h2>Comments</h2>
-          <ul className={styles.commentList}></ul>
-        </div>
-        <AddCommentForm postId={feedId} />
+        <CommentList postId={feedId} />
       </div>
     </section>
   );

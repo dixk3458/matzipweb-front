@@ -30,4 +30,10 @@ interface Post extends Marker {
   images: ImageUri[];
 }
 
-export type { MarkerColor, Profile, ImageUri, Marker, Post };
+interface Comment {
+  id: number;
+  text: string;
+  author: Profile;
+}
+
+export type { MarkerColor, Profile, ImageUri, Marker, Post, Comment };

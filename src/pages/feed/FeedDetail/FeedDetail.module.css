@@ -116,16 +116,3 @@
   align-items: center;
   gap: 10px;
 }
-
-.commentsSection {
-  overflow-y: auto;
-}
-
-.commentList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  height: 100px;
-  max-height: 100px;
-  overflow-y: auto;
-}
