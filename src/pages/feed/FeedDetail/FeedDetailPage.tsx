@@ -46,6 +46,8 @@ function FeedDetailPage() {
     author,
   } = feed;
 
+  const emptySlots = Array(5 - images.length).fill(null);
+
   return (
     <section className={styles.container}>
       <div className={styles.leftSection}>
@@ -69,6 +71,11 @@ function FeedDetailPage() {
                 className={styles.thumbnail}
                 onClick={() => setSelectedImage(image)}
               />
+            </li>
+          ))}
+          {emptySlots.map((_, index) => (
+            <li key={`empty-${index}`} className={styles.thumbnailWrapper}>
+              <div className={styles.emptyThumbnail}>No Image</div>
             </li>
           ))}
         </ul>

@@ -23,7 +23,6 @@ function FeedHomePage() {
     return <p>피드가 없습니다.</p>;
   }
 
-  console.log(feeds);
   return (
     <section className={styles.container}>
       <ul className={styles.feedContainer}>

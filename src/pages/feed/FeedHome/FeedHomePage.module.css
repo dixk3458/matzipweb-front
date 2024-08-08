@@ -1,5 +1,9 @@
 /* FeedHomePage.module.css */
 .container {
+  display: flex;
+  flex: 1;
+  margin: 0 auto;
+  max-width: 1200px;
   padding: 16px;
 }
 
