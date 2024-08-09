@@ -12,7 +12,7 @@ function useGetAllCommentsByPostId(
 ) {
   return useQuery({
     queryFn: () => getAllCommentsByPostId(postId),
-    queryKey: [queryKeys.COMMENTS, queryKeys.GET_COMMENTS],
+    queryKey: [queryKeys.COMMENTS, queryKeys.GET_COMMENTS, postId],
     ...queryOptions,
   });
 }

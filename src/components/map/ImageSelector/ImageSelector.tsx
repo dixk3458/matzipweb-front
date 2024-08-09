@@ -5,7 +5,7 @@ import styles from './ImageSelector.module.css';
 
 interface ImageSelectorProps {
   selectedImageFiles: File[];
-  handleRemoveImage: (uri: string) => void;
+  handleRemoveImage: (file: File) => void; // File 객체를 직접 전달
   handleChangeImageFile: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -30,9 +30,9 @@ function ImageSelector({
                 <button
                   className={styles.removeButton}
                   type="button"
-                  onClick={() => handleRemoveImage(URL.createObjectURL(file))}
+                  onClick={() => handleRemoveImage(file)} // File 객체를 직접 전달
                 >
-                  <XIcon />
+                  <XIcon color="white" />
                 </button>
               </li>
             ))}
@@ -46,7 +46,7 @@ function ImageSelector({
                   type="file"
                   accept="image/*"
                   multiple
-                  onChange={event => handleChangeImageFile(event)}
+                  onChange={handleChangeImageFile}
                   style={{ display: 'none' }}
                 />
               </li>

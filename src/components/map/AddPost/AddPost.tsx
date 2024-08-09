@@ -17,19 +17,18 @@ import styles from './AddPost.module.css';
 import ImageSelector from '../ImageSelector/ImageSelector';
 import useMutateCreatePost from '../../../hooks/queries/useMutateCreatePost';
 import useMutateUploadImages from '../../../hooks/queries/useMutateUploadImages';
+import useAuth from '../../../hooks/queries/useAuth';
 
 interface AddPostProps {
   onClose: () => void;
 }
 
 function AddPost({ onClose }: AddPostProps) {
-  const { setSelectedLocation } = useLocationStore();
-
+  const { getProfileQuery } = useAuth();
+  const { id: userId } = getProfileQuery.data ?? {};
+  const { setSelectedLocation, selectedLocation } = useLocationStore();
   const uploadImages = useMutateUploadImages();
-
-  const createPost = useMutateCreatePost();
-
-  const { selectedLocation } = useLocationStore();
+  const createPost = useMutateCreatePost(userId!);
   const address = useGetAddress(selectedLocation!);
   const { values, touched, errors, getInputProps } = useForm({
     initialValue: {
@@ -39,11 +38,11 @@ function AddPost({ onClose }: AddPostProps) {
     validate: validateAddPost,
   });
 
-  const [selectedImageFiles, setselectedImageFiles] = useState<File[]>([]);
+  const [selectedImageFiles, setSelectedImageFiles] = useState<File[]>([]);
   const [selectedMarkerColor, setSelectedMarkerColor] = useState<MarkerColor>(
     markerColor.RED
   );
-  const [selectedScore, setSelctedScore] = useState<number>(
+  const [selectedScore, setSelectedScore] = useState<number>(
     numbers.DEFAULT_SCORE
   );
 
@@ -55,15 +54,13 @@ function AddPost({ onClose }: AddPostProps) {
       return;
     }
 
-    setselectedImageFiles([...selectedImageFiles, ...files]);
+    setSelectedImageFiles([...selectedImageFiles, ...files]);
   };
 
-  const handleRemoveImage = (uri: string) => {
-    const filtered = selectedImageFiles.filter(
-      imageFile => URL.createObjectURL(imageFile) !== uri
+  const handleRemoveImage = (fileToRemove: File) => {
+    setSelectedImageFiles(prevFiles =>
+      prevFiles.filter(file => file !== fileToRemove)
     );
-
-    return filtered;
   };
 
   const handleUpdateMarkerColor = (color: MarkerColor) => {
@@ -71,7 +68,7 @@ function AddPost({ onClose }: AddPostProps) {
   };
 
   const handleUpdateScore = (score: number) => {
-    setSelctedScore(score);
+    setSelectedScore(score);
   };
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
@@ -100,7 +97,7 @@ function AddPost({ onClose }: AddPostProps) {
       return;
     }
 
-    // 서버에 업로드할 이미지 파일들을 만듬
+    // 서버에 업로드할 이미지 파일들을 FormData에 추가
     const formData = new FormData();
     selectedImageFiles.forEach(imageFile => {
       formData.append('files', imageFile);
@@ -108,7 +105,6 @@ function AddPost({ onClose }: AddPostProps) {
 
     uploadImages.mutate(formData, {
       onSuccess: imageUris => {
-        console.log('이미지 업로드 성공');
         createPost.mutate(
           {
             ...body,
@@ -121,13 +117,13 @@ function AddPost({ onClose }: AddPostProps) {
               onClose();
             },
             onError: error => {
-              console.log(error);
+              console.error(error);
             },
           }
         );
       },
       onError: error => {
-        console.log('이미지 업로드 실패');
+        console.error('이미지 업로드 실패:', error);
       },
     });
   };
@@ -139,7 +135,6 @@ function AddPost({ onClose }: AddPostProps) {
           disabled={true}
           type="text"
           value={address ?? '주소를 불러오지 못했습니다.'}
-          ellipsis={true}
           icon={<MapLocationIcon />}
         />
         <InputField
