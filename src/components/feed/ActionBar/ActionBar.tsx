@@ -8,21 +8,25 @@ import useMutateLikePost from '../../../hooks/queries/useMutateLikePost';
 import useCurrentPostIdStore from '../../../store/useCurrentPostIdStore';
 import { colors } from '../../../constants';
 import useMutateBookmarkPost from '../../../hooks/queries/useMutateBookmarkPost';
+import useGetLikeByPostId from '../../../hooks/queries/useGetLikeByPostId';
 
 function ActionBar() {
   const { currentPostId } = useCurrentPostIdStore();
+  const {
+    data: liked = false,
+    isLoading,
+    error,
+  } = useGetLikeByPostId(currentPostId!);
 
-  const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  const toggleLike = useMutateLikePost(isLiked);
+  const toggleLike = useMutateLikePost(liked);
   const toggleBookmark = useMutateBookmarkPost(isBookmarked);
 
   const handleClickLikeButton = () => {
     toggleLike.mutate(currentPostId!, {
       onSuccess: () => {
         console.log('좋아요 토글 성공');
-        setIsLiked(!isLiked); // 성공 시 상태를 토글
       },
       onError: error => {
         console.error('좋아요 요청 실패:', error);
@@ -50,7 +54,7 @@ function ActionBar() {
         className={styles.actionButton}
         onClick={() => handleClickLikeButton()}
       >
-        {isLiked ? <HeartFillIcon color={colors.RED} /> : <HeartIcon />}
+        {liked ? <HeartFillIcon color={colors.RED} /> : <HeartIcon />}
       </button>
       <button
         className={styles.actionButton}

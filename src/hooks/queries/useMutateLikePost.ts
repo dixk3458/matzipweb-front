@@ -1,6 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { dislikePost, likePost } from '../../apis/like';
 import { UseMutationCustomOptions } from '../../types';
+import { queryClient } from '../../utils';
+import { queryKeys } from '../../constants';
 
 function useMutateLikePost(
   liked: boolean,
@@ -10,6 +12,11 @@ function useMutateLikePost(
   const request = liked ? dislikePost : likePost;
   return useMutation({
     mutationFn: (postId: number) => request(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.LIKE, queryKeys.GET_LIKE],
+      });
+    },
     ...mutationOptions,
   });
 }
