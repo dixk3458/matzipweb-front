@@ -1,15 +1,15 @@
 import useGetAllCommentsByPostId from '../../../hooks/queries/useGetAllCommentsByPostId';
+import useCurrentPostIdStore from '../../../store/useCurrentPostIdStore';
 import ProfileCard from '../../common/ProfileCard/ProfileCard';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
 import styles from './CommentList.module.css';
 
-interface CommentListProps {
-  postId: number;
-}
-
-function CommentList({ postId }: CommentListProps) {
-  const { data: comments, isLoading } = useGetAllCommentsByPostId(postId);
+function CommentList() {
+  const { currentPostId } = useCurrentPostIdStore();
+  const { data: comments, isLoading } = useGetAllCommentsByPostId(
+    currentPostId!
+  );
 
   return (
     <>
@@ -23,7 +23,7 @@ function CommentList({ postId }: CommentListProps) {
             </li>
           ))}
       </ul>
-      <AddCommentForm postId={postId} />
+      <AddCommentForm />
     </>
   );
 }

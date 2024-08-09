@@ -23,6 +23,8 @@ interface AddPostProps {
 }
 
 function AddPost({ onClose }: AddPostProps) {
+  const { setSelectedLocation } = useLocationStore();
+
   const uploadImages = useMutateUploadImages();
 
   const createPost = useMutateCreatePost();
@@ -115,6 +117,7 @@ function AddPost({ onClose }: AddPostProps) {
           },
           {
             onSuccess: () => {
+              setSelectedLocation(null);
               onClose();
             },
             onError: error => {

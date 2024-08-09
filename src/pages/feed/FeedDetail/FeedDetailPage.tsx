@@ -9,14 +9,22 @@ import MarkerIcon from '../../../components/icon/MarkerIcon';
 import CommentList from '../../../components/feed/CommentList/CommentList';
 
 import styles from './FeedDetail.module.css';
+import useCurrentPostIdStore from '../../../store/useCurrentPostIdStore';
 
 function FeedDetailPage() {
+  const { setCurrentPostId } = useCurrentPostIdStore();
+
   const location = useLocation();
   const { feedId } = location.state || {};
 
   const { data: feed, isLoading, error } = useGetPostByPostId(feedId);
 
   const [selectedImage, setSelectedImage] = useState<ImageUri>();
+
+  // 컴포넌트가 마운트되면 feedId를 상태로 설정
+  useEffect(() => {
+    setCurrentPostId(feedId);
+  }, [feedId, setCurrentPostId]);
 
   useEffect(() => {
     if (feed) {
@@ -94,7 +102,7 @@ function FeedDetailPage() {
           <MarkerIcon color={color} size={24} />
         </div>
         <ActionBar />
-        <CommentList postId={feedId} />
+        <CommentList />
       </div>
     </section>
   );

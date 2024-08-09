@@ -1,13 +1,11 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import styles from './AddCommentForm.module.css';
 import useMutateAddComment from '../../../hooks/queries/useMutateAddComment';
+import useCurrentPostIdStore from '../../../store/useCurrentPostIdStore';
 
-interface AddCommentFormProps {
-  postId: number;
-}
-
-function AddCommentForm({ postId }: AddCommentFormProps) {
-  const addComment = useMutateAddComment(postId);
+function AddCommentForm() {
+  const { currentPostId } = useCurrentPostIdStore();
+  const addComment = useMutateAddComment(currentPostId!);
 
   const [text, setText] = useState('');
 

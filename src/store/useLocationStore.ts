@@ -5,7 +5,7 @@ type LocationStore = {
   currentLocation: google.maps.LatLngLiteral | null;
   setCurrentLocation: (location: google.maps.LatLngLiteral) => void;
   selectedLocation: google.maps.LatLngLiteral | null;
-  setSelectedLocation: (location: google.maps.LatLngLiteral) => void;
+  setSelectedLocation: (location: google.maps.LatLngLiteral | null) => void;
 };
 
 const useLocationStore = create<LocationStore>(set => ({
