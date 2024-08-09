@@ -1,17 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
-import { dislikePost, likePost } from '../../apis/like';
 import { UseMutationCustomOptions } from '../../types';
+import { bookmarkPost, removeBookmarkPost } from '../../apis/bookmark';
 
-function useMutateLikePost(
-  liked: boolean,
+function useMutateBookmarkPost(
+  bookmarked: boolean,
   mutationOptions?: UseMutationCustomOptions
 ) {
-  // 이전에 좋아요했다면 싫어요를.
-  const request = liked ? dislikePost : likePost;
+  const request = bookmarked ? removeBookmarkPost : bookmarkPost;
+
   return useMutation({
     mutationFn: (postId: number) => request(postId),
     ...mutationOptions,
   });
 }
 
-export default useMutateLikePost;
+export default useMutateBookmarkPost;
