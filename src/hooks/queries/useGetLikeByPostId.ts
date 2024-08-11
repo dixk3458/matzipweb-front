@@ -9,7 +9,7 @@ function useGetLikeByPostId(
 ) {
   return useQuery({
     queryFn: () => getLikeByPostId(postId),
-    queryKey: [queryKeys.LIKE, queryKeys.GET_LIKE],
+    queryKey: [queryKeys.LIKE, queryKeys.GET_LIKE, postId],
     ...queryOptions,
   });
 }

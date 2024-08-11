@@ -11,8 +11,12 @@ type ResponseError = AxiosError<{
   error: string;
 }>;
 
-type UseMutationCustomOptions<TData = unknown, TVariables = unknown> = Omit<
-  UseMutationOptions<TData, ResponseError, TVariables, unknown>,
+type UseMutationCustomOptions<
+  TData = unknown,
+  TVariables = unknown,
+  TContext = unknown
+> = Omit<
+  UseMutationOptions<TData, ResponseError, TVariables, TContext>,
   'mutationFn'
 >;
 
