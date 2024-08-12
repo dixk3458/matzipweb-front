@@ -11,6 +11,8 @@ import HomePage from './pages/home/Home/HomePage';
 import PrivateRoute from './components/common/PrivateRoute/PrivateRoute';
 import FeedHomePage from './pages/feed/FeedHome/FeedHomePage';
 import FeedDetailPage from './pages/feed/FeedDetail/FeedDetailPage';
+import SearchHomePage from './pages/search/SearchHome/SearchHomePage';
+import UserDetailPage from './pages/user/UserDetail/UserDetailPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -54,6 +56,22 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <FeedDetailPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/search',
+        element: (
+          <PrivateRoute>
+            <SearchHomePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/user/:email',
+        element: (
+          <PrivateRoute>
+            <UserDetailPage />
           </PrivateRoute>
         ),
       },

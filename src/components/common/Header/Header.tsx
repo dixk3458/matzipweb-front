@@ -3,6 +3,7 @@ import useAuth from '../../../hooks/queries/useAuth';
 import CustomButton from '../CustomButton/CustomButton';
 
 import styles from './Header.module.css';
+import SearchIcon from '../../icon/SearchIcon';
 
 function Header() {
   const { isLogin, logoutMutation } = useAuth();
@@ -43,6 +44,16 @@ function Header() {
               to={'/feed'}
             >
               Feed
+            </Link>
+          </li>
+          <li className={styles.buttonListItem}>
+            <Link
+              className={`${styles.buttonListItemText} ${
+                pathname === '/search' && styles.active
+              }`}
+              to={'/search'}
+            >
+              <SearchIcon />
             </Link>
           </li>
           <li>
