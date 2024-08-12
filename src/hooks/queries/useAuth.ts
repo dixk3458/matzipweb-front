@@ -5,7 +5,7 @@ import {
   logout,
   postSignin,
   postSignup,
-  ResponseProfile,
+  ResponseProfileUser,
 } from '../../apis/auth';
 import { UseMutationCustomOptions, UseQueryCustomOptions } from '../../types';
 import { queryKeys, storageKeys } from '../../constants/keys';
@@ -69,7 +69,9 @@ function useLogout(mutationOptions?: UseMutationCustomOptions) {
   });
 }
 
-function useGetProfile(queryOptions?: UseQueryCustomOptions<ResponseProfile>) {
+function useGetProfile(
+  queryOptions?: UseQueryCustomOptions<ResponseProfileUser>
+) {
   return useQuery({
     queryFn: getProfile,
     queryKey: [queryKeys.AUTH, queryKeys.GET_PROFILE],

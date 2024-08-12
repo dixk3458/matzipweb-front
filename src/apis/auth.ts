@@ -1,4 +1,4 @@
-import { Profile } from '../types';
+import { ProfileUser } from '../types';
 import axiosInstance from './axios';
 
 type RequestUser = {
@@ -10,7 +10,7 @@ type ResponseToken = {
   accessToken: string;
 };
 
-type ResponseProfile = Profile;
+type ResponseProfileUser = ProfileUser;
 
 async function postSignup({ email, password }: RequestUser) {
   const { data } = await axiosInstance.post('/auth/signup', {
@@ -37,7 +37,7 @@ async function logout(): Promise<void> {
   await axiosInstance.post('/auth/logout');
 }
 
-async function getProfile(): Promise<ResponseProfile> {
+async function getProfile(): Promise<ResponseProfileUser> {
   const { data } = await axiosInstance.get('/auth/me');
 
   return data;
@@ -48,4 +48,4 @@ async function getAccessToken(): Promise<ResponseToken> {
   return data;
 }
 export { postSignup, postSignin, logout, getProfile, getAccessToken };
-export type { RequestUser, ResponseToken, ResponseProfile };
+export type { RequestUser, ResponseToken, ResponseProfileUser };

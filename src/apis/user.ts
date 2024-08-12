@@ -1,7 +1,7 @@
-import { Profile } from '../types';
+import { DetailUser, ProfileUser } from '../types';
 import axiosInstance from './axios';
 
-type ResponseSearchUser = Profile[];
+type ResponseSearchUser = ProfileUser[];
 
 async function searchUserByKeyword(
   keyword: string
@@ -13,5 +13,11 @@ async function searchUserByKeyword(
   return data;
 }
 
-export { searchUserByKeyword };
+async function getProfileByEmail(email: string): Promise<DetailUser> {
+  const { data } = await axiosInstance.get(`/users?email=${email}`);
+
+  return data;
+}
+
+export { searchUserByKeyword, getProfileByEmail };
 export type { ResponseSearchUser };

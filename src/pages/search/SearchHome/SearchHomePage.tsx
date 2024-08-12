@@ -26,7 +26,7 @@ function SearchHomePage() {
         {users &&
           users.map(user => (
             <li className={styles.userItem} key={user.id}>
-              <Link to={`/user/${user.email}`}>
+              <Link to={`/user/${user.email}`} state={{ email: user.email }}>
                 <ProfileCard user={user} />
               </Link>
             </li>

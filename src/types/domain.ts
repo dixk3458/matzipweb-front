@@ -1,11 +1,16 @@
 type MarkerColor = 'RED' | 'BLUE' | 'GREEN' | 'YELLOW' | 'PURPLE';
 
-interface Profile {
+interface DetailUser {
   id: number;
   email: string;
   nickname: string | null;
   imageUri: string | null;
+  posts: Post[];
+  followers: ProfileUser[];
+  following: ProfileUser[];
 }
+
+type ProfileUser = Omit<DetailUser, 'posts' | 'followers' | 'following'>;
 
 interface ImageUri {
   id?: number;
@@ -25,7 +30,7 @@ interface Post extends Marker {
   address: string;
   title: string;
   description: string;
-  author: Profile;
+  author: ProfileUser;
   createdDate: Date | string;
   images: ImageUri[];
 }
@@ -33,7 +38,15 @@ interface Post extends Marker {
 interface Comment {
   id: number;
   text: string;
-  author: Profile;
+  author: ProfileUser;
 }
 
-export type { MarkerColor, Profile, ImageUri, Marker, Post, Comment };
+export type {
+  MarkerColor,
+  DetailUser,
+  ProfileUser,
+  ImageUri,
+  Marker,
+  Post,
+  Comment,
+};

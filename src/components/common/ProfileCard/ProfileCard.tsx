@@ -1,9 +1,9 @@
-import { Profile } from '../../../types';
+import { ProfileUser } from '../../../types';
 import Avatar from '../Avatar/Avatar';
 import styles from './ProfileCard.module.css';
 
 interface ProfileCardProps {
-  user: Profile;
+  user: ProfileUser;
 }
 
 function ProfileCard({ user }: ProfileCardProps) {
