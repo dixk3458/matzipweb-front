@@ -1,74 +1,80 @@
 .container {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  background: white;
-  border: 1px solid #ddd;
+  align-items: center;
+  border: 1px solid var(--color-gray-200);
   border-radius: 8px;
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.2s ease-in-out;
 }
 
 .container:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.imageWrapper {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  transform: scale(1.05);
 }
 
 .image {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
+  aspect-ratio: 1;
+  width: 100%;
 }
 
 .noImage {
+  object-fit: cover;
+  aspect-ratio: 1;
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
-  color: #888;
-  font-size: 16px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-gray-400);
 }
 
-.infoTextContainer {
-  border-top: 1px solid var(--color-gray-200);
-  padding: 15px;
+.content {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  border-top: 1px solid var(--color-gray-200);
+  width: 100%;
+  padding: 10px;
+  text-align: center;
   gap: 10px;
+  flex-grow: 1;
 }
 
 .titleText {
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
-  margin: 0;
-}
-
-.metaContainer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.scoreText {
-  font-size: 14px;
-  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 최대 3줄로 제한 */
+  -webkit-box-orient: vertical;
+  line-clamp: 1;
+  color: var(--color-black);
 }
 
 .descriptionText {
-  font-size: 14px;
-  color: #666;
-  max-height: 50px;
+  font-size: 0.9rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 최대 3줄로 제한 */
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  width: 100%;
+  color: var(--color-gray-700);
+  flex: 1;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--color-black);
 }
