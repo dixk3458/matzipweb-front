@@ -1,0 +1,86 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 가로로 3개의 열 */
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1; /* 정사각형을 유지 */
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+}
+
+.item:hover {
+  transform: scale(1.05);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--color-gray-400);
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.infoContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(var(--color-black-rgb), 0.5);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  padding: 10px;
+  gap: 10px;
+}
+
+.item:hover .infoContainer {
+  opacity: 1; /* hover 시 보이도록 */
+}
+
+.titleText {
+  font-size: 1.2rem;
+  font-weight: bold;
+  white-space: nowrap; /* 한줄로 표시*/
+  overflow: hidden;
+  text-overflow: ellipsis; /* ...으로 표시*/
+  width: 100%;
+  text-align: center;
+}
+
+.descriptionText {
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  width: 100%;
+  text-align: center;
+}

@@ -27,7 +27,7 @@ function ProfileMeta({ user }: ProfileMetaProps) {
         >
           {user.followers.length}
         </p>
-        <p className={styles.title}>게시물</p>
+        <p className={styles.title}>팔로워</p>
       </li>
       <li className={styles.item}>
         <p
