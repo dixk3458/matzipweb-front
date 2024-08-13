@@ -1,0 +1,38 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.itemText {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.bar {
+  height: 4px;
+  width: 60px;
+  background-color: var(--color-gray-700);
+  opacity: 0;
+}
+
+.filtered {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .itemText {
+    display: none;
+  }
+}

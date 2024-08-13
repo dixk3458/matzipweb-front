@@ -20,14 +20,20 @@
 .small {
   width: 30px;
   height: 30px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .medium {
   width: 60px;
   height: 60px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .large {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
+  font-size: 60px;
+  font-weight: bold;
 }
