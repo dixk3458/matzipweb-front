@@ -3,6 +3,7 @@ import CustomButton from '../../common/CustomButton/CustomButton';
 import ProfileMeta from '../ProfileMeta/ProfileMeta';
 import styles from './ProfileHeader.module.css';
 import { DetailUser } from '../../../types';
+import useGetCheckIfFollowing from '../../../hooks/queries/useGetCheckIfFollowing';
 
 interface ProfileHeaderProps {
   currentProfile: DetailUser;
@@ -10,6 +11,10 @@ interface ProfileHeaderProps {
 }
 
 function ProfileHeader({ currentProfile, isOwnProfile }: ProfileHeaderProps) {
+  const { data: isFollowing } = useGetCheckIfFollowing(currentProfile.id);
+
+  console.log(isFollowing);
+
   return (
     <div className={styles.profileHeader}>
       <Avatar
@@ -23,7 +28,10 @@ function ProfileHeader({ currentProfile, isOwnProfile }: ProfileHeaderProps) {
           {isOwnProfile ? (
             <CustomButton label="프로필 편집" onClick={() => {}} />
           ) : (
-            <CustomButton label={''} onClick={() => {}} />
+            <CustomButton
+              label={isFollowing ? 'Unfollow' : 'Follow'}
+              onClick={() => {}}
+            />
           )}
         </div>
       </div>
