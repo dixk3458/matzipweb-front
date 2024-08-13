@@ -17,7 +17,7 @@ async function createPost(body: RequestCreatePost): Promise<ResponsePost> {
 }
 
 async function getAllPostsByUserId(userId: number): Promise<ResponsePost[]> {
-  const { data } = await axiosInstance.get(`/posts?userId=${userId}`);
+  const { data } = await axiosInstance.get(`/posts/all/?userId=${userId}`);
 
   return data;
 }
@@ -28,5 +28,24 @@ async function getPostByPostId(postId: number): Promise<ResponsePost> {
   return data;
 }
 
-export { createPost, getAllPostsByUserId, getPostByPostId };
+async function getLikedPostsByUserId(userId: number): Promise<ResponsePost[]> {
+  const { data } = await axiosInstance.get(`/posts/like/?userId=${userId}`);
+
+  return data;
+}
+async function getBookmarkedPostsByUserId(
+  userId: number
+): Promise<ResponsePost[]> {
+  const { data } = await axiosInstance.get(`/posts/bookmark/?userId=${userId}`);
+
+  return data;
+}
+
+export {
+  createPost,
+  getAllPostsByUserId,
+  getPostByPostId,
+  getLikedPostsByUserId,
+  getBookmarkedPostsByUserId,
+};
 export type { RequestCreatePost, ResponsePost };

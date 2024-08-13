@@ -9,6 +9,7 @@ import FilterMenu, {
   Filter,
 } from '../../../components/user/FilterMenu/FilterMenu';
 import { useState } from 'react';
+import PostsGrid from '../../../components/user/PostsGrid/PostsGrid';
 
 function UserDetailPage() {
   const location = useLocation();
@@ -65,6 +66,7 @@ function UserDetailPage() {
       </div>
       <div className={styles.postContainer}>
         <FilterMenu filter={filter} handleChangeFilter={handleChangeFilter} />
+        <PostsGrid currentUserId={currentProfile.id} filter={filter} />
       </div>
     </section>
   );
