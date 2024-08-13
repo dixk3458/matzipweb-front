@@ -3,6 +3,7 @@ import useGetAllPostsByUserId from '../../../hooks/queries/useGetAllPostsByUserI
 import styles from './FeedHomePage.module.css';
 import FeedCard from '../../../components/feed/FeedCard/FeedCard';
 import { Link } from 'react-router-dom';
+import CustomLoadingSpinner from '../../../components/common/CustomLoadingSpinner/CustomLoadingSpinner';
 
 function FeedHomePage() {
   const { getProfileQuery } = useAuth();
@@ -10,23 +11,19 @@ function FeedHomePage() {
 
   const { data: feeds, isLoading, error } = useGetAllPostsByUserId(userId!);
 
-  if (isLoading) {
-    return <p>로딩중...</p>;
-  }
-
-  if (!isLoading && error) {
-    return <p>에러...</p>;
-  }
-
-  if (!isLoading && !error && feeds && feeds.length === 0) {
-    return <p>피드가 없습니다.</p>;
-  }
-
   return (
-    <section className={styles.container}>
-      <ul className={styles.feedContainer}>
-        {feeds &&
-          feeds.map(feed => (
+    <section className={`${styles.container} ${isLoading && styles.loading}`}>
+      {isLoading && <CustomLoadingSpinner />}
+
+      {!isLoading && error && <p>에러가 발생했습니다. 다시 시도해주세요.</p>}
+
+      {!isLoading && !error && feeds && feeds.length === 0 && (
+        <p>피드가 없습니다.</p>
+      )}
+
+      {!isLoading && !error && feeds && feeds.length > 0 && (
+        <ul className={styles.feedContainer}>
+          {feeds.map(feed => (
             <li key={feed.id} className={styles.item}>
               <Link
                 to={`/feed/${feed.id}`}
@@ -37,7 +34,8 @@ function FeedHomePage() {
               </Link>
             </li>
           ))}
-      </ul>
+        </ul>
+      )}
     </section>
   );
 }

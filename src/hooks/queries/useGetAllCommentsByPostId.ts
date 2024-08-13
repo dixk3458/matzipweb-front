@@ -4,7 +4,7 @@ import {
   ResponseGetAllComments,
 } from '../../apis/comment';
 import { queryKeys } from '../../constants';
-import { Comment, UseQueryCustomOptions } from '../../types';
+import { UseQueryCustomOptions } from '../../types';
 
 function useGetAllCommentsByPostId(
   postId: number,

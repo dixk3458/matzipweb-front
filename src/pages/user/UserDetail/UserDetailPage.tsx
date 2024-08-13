@@ -10,6 +10,7 @@ import FilterMenu, {
 } from '../../../components/user/FilterMenu/FilterMenu';
 import { useState } from 'react';
 import PostsGrid from '../../../components/user/PostsGrid/PostsGrid';
+import CustomLoadingSpinner from '../../../components/common/CustomLoadingSpinner/CustomLoadingSpinner';
 
 function UserDetailPage() {
   const location = useLocation();
@@ -29,45 +30,52 @@ function UserDetailPage() {
     setFilter(filter);
   };
 
-  if (!currentProfile) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <section className={styles.container}>
-      <div className={styles.profileContainer}>
-        <div className={styles.wrapper}>
-          <div className={styles.innerContainer}>
-            <Avatar
-              imageUri={currentProfile.imageUri}
-              emailOrNickname={currentProfile.nickname ?? currentProfile.email}
-              size="large"
+      {!currentProfile ? (
+        <CustomLoadingSpinner />
+      ) : (
+        <>
+          <div className={styles.profileContainer}>
+            <div className={styles.wrapper}>
+              <div className={styles.innerContainer}>
+                <Avatar
+                  imageUri={currentProfile.imageUri}
+                  emailOrNickname={
+                    currentProfile.nickname ?? currentProfile.email
+                  }
+                  size="large"
+                />
+                <ProfileMeta user={currentProfile} />
+              </div>
+              <div className={styles.buttonContainer}>
+                {isOwnProfile && (
+                  <CustomButton label="프로필 편집" onClick={() => {}} />
+                )}
+                {!isOwnProfile && (
+                  <CustomButton
+                    label={
+                      myProfile?.following.find(
+                        user => user.email === currentProfile.email
+                      )
+                        ? 'Unfollow'
+                        : 'Follow'
+                    }
+                    onClick={() => {}}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+          <div className={styles.postContainer}>
+            <FilterMenu
+              filter={filter}
+              handleChangeFilter={handleChangeFilter}
             />
-            <ProfileMeta user={currentProfile} />
+            <PostsGrid currentUserId={currentProfile.id} filter={filter} />
           </div>
-          <div className={styles.buttonContainer}>
-            {isOwnProfile && (
-              <CustomButton label="프로필 편집" onClick={() => {}} />
-            )}
-            {!isOwnProfile && (
-              <CustomButton
-                label={
-                  myProfile?.following.find(
-                    user => user.email === currentProfile.email
-                  )
-                    ? 'Unfollow'
-                    : 'Follow'
-                }
-                onClick={() => {}}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-      <div className={styles.postContainer}>
-        <FilterMenu filter={filter} handleChangeFilter={handleChangeFilter} />
-        <PostsGrid currentUserId={currentProfile.id} filter={filter} />
-      </div>
+        </>
+      )}
     </section>
   );
 }

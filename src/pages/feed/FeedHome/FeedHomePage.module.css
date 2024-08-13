@@ -2,13 +2,20 @@
   max-width: 1200px;
   margin: 0 auto;
   flex: 1;
-  padding: 20px;
+  display: flex;
+  flex-direction: column; /* 로딩 상태가 아닐 때 수직으로 정렬 */
+}
+
+.container.loading {
+  justify-content: center;
+  align-items: center;
 }
 
 .feedContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  padding: 20px;
 }
 
 .item {
