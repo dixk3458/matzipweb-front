@@ -1,0 +1,25 @@
+.profileHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.innerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .profileHeader {
+    flex-direction: column;
+  }
+
+  .innerContainer {
+    align-items: center;
+  }
+}

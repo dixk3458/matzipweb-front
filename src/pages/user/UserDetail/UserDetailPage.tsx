@@ -2,15 +2,13 @@ import { useLocation } from 'react-router-dom';
 import styles from './UserDetailPage.module.css';
 import useAuth from '../../../hooks/queries/useAuth';
 import useGetProfileByEmail from '../../../hooks/queries/useGetProfileByEmail';
-import Avatar from '../../../components/common/Avatar/Avatar';
-import ProfileMeta from '../../../components/user/ProfileMeta/ProfileMeta';
-import CustomButton from '../../../components/common/CustomButton/CustomButton';
+import CustomLoadingSpinner from '../../../components/common/CustomLoadingSpinner/CustomLoadingSpinner';
+import ProfileHeader from '../../../components/user/ProfileHeader/ProfileHeader';
 import FilterMenu, {
   Filter,
 } from '../../../components/user/FilterMenu/FilterMenu';
-import { useState } from 'react';
 import PostsGrid from '../../../components/user/PostsGrid/PostsGrid';
-import CustomLoadingSpinner from '../../../components/common/CustomLoadingSpinner/CustomLoadingSpinner';
+import { useState } from 'react';
 
 function UserDetailPage() {
   const location = useLocation();
@@ -21,8 +19,11 @@ function UserDetailPage() {
 
   const isOwnProfile = email === profileEmail;
 
-  const { data: currentProfile } = useGetProfileByEmail(email);
-  const { data: myProfile } = useGetProfileByEmail(profileEmail!);
+  const {
+    data: currentProfile,
+    isLoading,
+    error,
+  } = useGetProfileByEmail(email);
 
   const [filter, setFilter] = useState<Filter>('post');
 
@@ -32,48 +33,16 @@ function UserDetailPage() {
 
   return (
     <section className={styles.container}>
-      {!currentProfile ? (
-        <CustomLoadingSpinner />
-      ) : (
+      {isLoading && <CustomLoadingSpinner />}
+      {!isLoading && error && <p>에러가 발생했습니다.</p>}
+      {currentProfile && (
         <>
-          <div className={styles.profileContainer}>
-            <div className={styles.wrapper}>
-              <div className={styles.innerContainer}>
-                <Avatar
-                  imageUri={currentProfile.imageUri}
-                  emailOrNickname={
-                    currentProfile.nickname ?? currentProfile.email
-                  }
-                  size="large"
-                />
-                <ProfileMeta user={currentProfile} />
-              </div>
-              <div className={styles.buttonContainer}>
-                {isOwnProfile && (
-                  <CustomButton label="프로필 편집" onClick={() => {}} />
-                )}
-                {!isOwnProfile && (
-                  <CustomButton
-                    label={
-                      myProfile?.following.find(
-                        user => user.email === currentProfile.email
-                      )
-                        ? 'Unfollow'
-                        : 'Follow'
-                    }
-                    onClick={() => {}}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-          <div className={styles.postContainer}>
-            <FilterMenu
-              filter={filter}
-              handleChangeFilter={handleChangeFilter}
-            />
-            <PostsGrid currentUserId={currentProfile.id} filter={filter} />
-          </div>
+          <ProfileHeader
+            currentProfile={currentProfile}
+            isOwnProfile={isOwnProfile}
+          />
+          <FilterMenu filter={filter} handleChangeFilter={handleChangeFilter} />
+          <PostsGrid currentUserId={currentProfile.id} filter={filter} />
         </>
       )}
     </section>
