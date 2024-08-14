@@ -27,23 +27,9 @@
 
 .buttonContainer {
   display: flex;
-  gap: 10px;
+  gap: 40px;
 }
 
-.buttonListItem {
-  display: flex;
-  align-items: center;
-  padding: 2px 4px;
-}
-
-.buttonListItemText {
-  color: var(--color-black);
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.active,
-.buttonListItemText:hover {
-  border-bottom: 2px solid var(--color-indigo-700);
-  color: var(--color-indigo-700);
+.item:hover {
+  transform: scale(1.05);
 }

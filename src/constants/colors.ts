@@ -4,6 +4,7 @@ const colors = {
   YELLOW: '#f6e52d',
   GREEN: '#10b981',
   PURPLE: '#8b5cf6',
+  BLACK: '#101E36',
 } as const;
 
 export { colors };
