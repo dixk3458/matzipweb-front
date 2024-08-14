@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { checkIfFollowing } from '../../apis/follow';
+import { checkIfFollowing, ResponseCheckIfFollowing } from '../../apis/follow';
 import { queryKeys } from '../../constants';
 import { UseQueryCustomOptions } from '../../types';
 
 function useGetCheckIfFollowing(
   userId: number,
-  queryOptions?: UseQueryCustomOptions
+  queryOptions?: UseQueryCustomOptions<ResponseCheckIfFollowing>
 ) {
   return useQuery({
     queryFn: () => checkIfFollowing(userId),
