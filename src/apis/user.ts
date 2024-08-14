@@ -3,6 +3,8 @@ import axiosInstance from './axios';
 
 type ResponseSearchUser = ProfileUser[];
 
+type RequestEditProfile = Omit<ProfileUser, 'id'>;
+
 async function searchUserByKeyword(
   keyword: string
 ): Promise<ResponseSearchUser> {
@@ -19,5 +21,11 @@ async function getProfileByEmail(email: string): Promise<DetailUser> {
   return data;
 }
 
-export { searchUserByKeyword, getProfileByEmail };
-export type { ResponseSearchUser };
+async function editProfile(body: RequestEditProfile): Promise<void> {
+  const { data } = await axiosInstance.put('/edit', body);
+
+  return data;
+}
+
+export { searchUserByKeyword, getProfileByEmail,editProfile };
+export type { ResponseSearchUser ,RequestEditProfile};
