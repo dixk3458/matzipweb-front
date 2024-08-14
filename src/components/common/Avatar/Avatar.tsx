@@ -2,7 +2,7 @@ import styles from './Avatar.module.css';
 
 interface AvatarProps {
   size?: 'small' | 'medium' | 'large';
-  imageUri: string | null;
+  imageUri: string | null | undefined;
   emailOrNickname: string;
 }
 

@@ -5,6 +5,7 @@ import styles from './ProfileHeader.module.css';
 import { DetailUser } from '../../../types';
 import useGetCheckIfFollowing from '../../../hooks/queries/useGetCheckIfFollowing';
 import useMutateFollowUser from '../../../hooks/queries/useMutateFollowUser';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfileHeaderProps {
   currentProfile: DetailUser;
@@ -12,6 +13,8 @@ interface ProfileHeaderProps {
 }
 
 function ProfileHeader({ currentProfile, isOwnProfile }: ProfileHeaderProps) {
+  const navigation = useNavigate();
+
   const { data } = useGetCheckIfFollowing(currentProfile.id);
   const isFollowing = data?.isFollowing ?? false;
 
@@ -32,7 +35,10 @@ function ProfileHeader({ currentProfile, isOwnProfile }: ProfileHeaderProps) {
         <ProfileMeta user={currentProfile} />
         <div className={styles.buttonContainer}>
           {isOwnProfile ? (
-            <CustomButton label="프로필 편집" onClick={() => {}} />
+            <CustomButton
+              label="프로필 편집"
+              onClick={() => navigation('/edit')}
+            />
           ) : (
             <CustomButton
               label={isFollowing ? 'Unfollow' : 'Follow'}

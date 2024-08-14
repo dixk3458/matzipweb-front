@@ -13,6 +13,7 @@ import FeedHomePage from './pages/feed/FeedHome/FeedHomePage';
 import FeedDetailPage from './pages/feed/FeedDetail/FeedDetailPage';
 import SearchHomePage from './pages/search/SearchHome/SearchHomePage';
 import UserDetailPage from './pages/user/UserDetail/UserDetailPage';
+import EditHomePage from './pages/edit/EditHome/EditHomePage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -72,6 +73,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UserDetailPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/edit',
+        element: (
+          <PrivateRoute>
+            <EditHomePage />
           </PrivateRoute>
         ),
       },

@@ -34,10 +34,6 @@ function Header() {
   const { isLogin, logoutMutation, getProfileQuery } = useAuth();
   const { email } = getProfileQuery.data ?? {};
 
-  const handleClickLogoutButton = () => {
-    logoutMutation.mutate(null);
-  };
-
   const { pathname } = useLocation();
 
   return (
@@ -53,7 +49,7 @@ function Header() {
       {isLogin && (
         <ul className={styles.buttonContainer}>
           {items.map(item => (
-            <li className={styles.item}>
+            <li className={styles.item} key={item.path}>
               <Link to={item.path}>
                 {pathname === item.path ? item.fillIcon : item.icon}
               </Link>
