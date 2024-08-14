@@ -14,6 +14,8 @@ import Modal from '../../../components/common/Modal/Modal';
 import AddPost from '../../../components/map/AddPost/AddPost';
 import useGetAllMarkersByUserId from '../../../hooks/queries/useGetAllMarkersByUserId';
 import CustomMarker from '../../../components/map/CustomMarker/CustomMarker';
+import EditMarkerCategoryForm from '../../../components/map/EditMarkerCategoryForm/EditMarkerCategoryForm';
+import MarkerLegend from '../../../components/map/MarkerLegend/MarkerLegend';
 
 function MapHomePage() {
   const { getProfileQuery } = useAuth();
@@ -22,6 +24,8 @@ function MapHomePage() {
   const markers = useGetAllMarkersByUserId(userId).data || [];
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const [isOpenMarkerModal, setIsOpenMarkerModal] = useState(false);
 
   const {
     currentLocation,
@@ -149,6 +153,9 @@ function MapHomePage() {
             />
           ))}
       </GoogleMap>
+      <MarkerLegend
+        handleClickSettingButton={() => setIsOpenMarkerModal(true)}
+      />
       <div className={styles.buttonContainer}>
         <CustomButton
           icon={<PlusIcon />}
@@ -163,21 +170,32 @@ function MapHomePage() {
           onClick={handleClickMinusButton}
         />
         <CustomButton
+          icon={<LocationIcon />}
+          size="small"
+          variant="filled"
+          onClick={handleClickLocationButton}
+        />
+        <CustomButton
           icon={<PencilIcon />}
           size="small"
           variant="filled"
           onClick={handleClickPencilButton}
         />
         <CustomButton
-          icon={<LocationIcon />}
+          icon={<PencilIcon />}
           size="small"
           variant="filled"
-          onClick={handleClickLocationButton}
+          onClick={handleClickPencilButton}
         />
       </div>
       {isOpenModal && (
         <Modal onClose={() => setIsOpenModal(false)}>
           <AddPost onClose={() => setIsOpenModal(false)} />
+        </Modal>
+      )}
+      {isOpenMarkerModal && (
+        <Modal onClose={() => setIsOpenMarkerModal(false)}>
+          <EditMarkerCategoryForm onClose={() => setIsOpenMarkerModal(false)} />
         </Modal>
       )}
     </section>

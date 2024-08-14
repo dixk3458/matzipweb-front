@@ -1,0 +1,45 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: var(--color-gray-100);
+  gap: 20px;
+  border-radius: 8px;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item {
+  display: flex;
+  gap: 20px;
+}
+
+.color {
+  flex-basis: 25%;
+  aspect-ratio: 1;
+  border-radius: 100%;
+}
+
+.RED {
+  background-color: var(--color-pink-700);
+}
+
+.BLUE {
+  background-color: var(--color-indigo-700);
+}
+
+.YELLOW {
+  background-color: var(--color-yellow-700);
+}
+
+.GREEN {
+  background-color: var(--color-green-700);
+}
+
+.PURPLE {
+  background-color: var(--color-purple-700);
+}
