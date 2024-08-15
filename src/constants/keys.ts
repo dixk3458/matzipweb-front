@@ -12,6 +12,7 @@ const queryKeys = {
   BOOKMARK: 'bookmark',
   SEARCH: 'search',
   FOLLOWING: 'following',
+  CATEGORY: 'categort',
   GET_PROFILE: 'getProfile',
   GET_ACCESS_TOKEN: 'getAccessToken',
   GET_MARKERS: 'getMarkers',
@@ -22,6 +23,7 @@ const queryKeys = {
   GET_BOOKMARK: 'getBookmark',
   GET_SEARCH_USER: 'getSearchUser',
   GET_FOLLOWING: 'getFollowing',
+  GET_CATEGORY: 'getCategory',
 };
 
 export { storageKeys, queryKeys };

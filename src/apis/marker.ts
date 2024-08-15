@@ -13,4 +13,10 @@ async function editMarkerCategory(body: Category) {
   return data;
 }
 
-export { getAllMarkersByUserId, editMarkerCategory };
+async function getMarkerCategory(): Promise<Category> {
+  const { data } = await axiosInstance.get('/markers/category');
+
+  return data;
+}
+
+export { getAllMarkersByUserId, editMarkerCategory, getMarkerCategory };

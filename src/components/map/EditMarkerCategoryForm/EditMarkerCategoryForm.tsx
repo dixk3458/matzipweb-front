@@ -8,6 +8,7 @@ import InputField from '../../common/InputField/InputField';
 import styles from './EditMarkerCategoryForm.module.css';
 import useMutateEditMarkerCategory from '../../../hooks/queries/useMutateEditMarkerCategory';
 import messages from '../../../constants/messages';
+import useGetMarkerCategory from '../../../hooks/queries/useGetMarkerCategory';
 
 interface EdittMarkerCategoryFormProps {
   onClose: () => void;
@@ -22,14 +23,10 @@ const colors: MarkerColor[] = [
 ];
 
 function EditMarkerCategoryForm({ onClose }: EdittMarkerCategoryFormProps) {
+  const { data: markerCategories } = useGetMarkerCategory() ?? {};
+
   const { values, getInputProps } = useForm({
-    initialValue: {
-      RED: '',
-      BLUE: '',
-      YELLOW: '',
-      GREEN: '',
-      PURPLE: '',
-    },
+    initialValue: markerCategories!,
   });
 
   const editMarkerCategory = useMutateEditMarkerCategory();
