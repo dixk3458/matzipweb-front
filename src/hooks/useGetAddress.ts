@@ -19,7 +19,7 @@ function useGetAddress(location: google.maps.LatLngLiteral | null) {
 
           setResult(address);
         } catch (error) {
-          setResult(messages.CANT_NOT_GET_ADDRESS);
+          setResult(messages.CAN_NOT_GET_ADDRESS);
         }
       })();
     }

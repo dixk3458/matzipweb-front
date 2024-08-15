@@ -6,6 +6,8 @@ import CustomButton from '../../common/CustomButton/CustomButton';
 import InputField from '../../common/InputField/InputField';
 
 import styles from './EditMarkerCategoryForm.module.css';
+import useMutateEditMarkerCategory from '../../../hooks/queries/useMutateEditMarkerCategory';
+import messages from '../../../constants/messages';
 
 interface EdittMarkerCategoryFormProps {
   onClose: () => void;
@@ -30,17 +32,27 @@ function EditMarkerCategoryForm({ onClose }: EdittMarkerCategoryFormProps) {
     },
   });
 
+  const editMarkerCategory = useMutateEditMarkerCategory();
+
   const handleClickUpdateButton = (e: MouseEvent) => {
     e.preventDefault();
 
-    onClose();
+    editMarkerCategory.mutate(values, {
+      onSuccess: () => {
+        onClose();
+      },
+      onError: error => {
+        console.log(error.response?.data.message);
+        alert(messages.CAN_NOT_UPDATE_MARKER_CATEGORY);
+      },
+    });
   };
 
   return (
     <form className={styles.formContainer}>
       <ul className={styles.itemList}>
         {colors.map(color => (
-          <li className={styles.item}>
+          <li className={styles.item} key={color}>
             <span className={`${styles.color} ${styles[color]}`} />
             <InputField
               type="text"

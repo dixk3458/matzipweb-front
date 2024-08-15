@@ -1,3 +1,4 @@
+import { Category } from '../types';
 import axiosInstance from './axios';
 
 async function getAllMarkersByUserId(userId: number) {
@@ -6,4 +7,10 @@ async function getAllMarkersByUserId(userId: number) {
   return data;
 }
 
-export { getAllMarkersByUserId };
+async function editMarkerCategory(body: Category) {
+  const { data } = await axiosInstance.put('/markers/category', body);
+
+  return data;
+}
+
+export { getAllMarkersByUserId, editMarkerCategory };

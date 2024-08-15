@@ -1,5 +1,9 @@
 type MarkerColor = 'RED' | 'BLUE' | 'GREEN' | 'YELLOW' | 'PURPLE';
 
+type Category = {
+  [key in MarkerColor]: string;
+};
+
 interface DetailUser {
   id: number;
   email: string;
@@ -43,6 +47,7 @@ interface Comment {
 
 export type {
   MarkerColor,
+  Category,
   DetailUser,
   ProfileUser,
   ImageUri,
