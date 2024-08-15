@@ -16,6 +16,7 @@ import useGetAllMarkersByUserId from '../../../hooks/queries/useGetAllMarkersByU
 import CustomMarker from '../../../components/map/CustomMarker/CustomMarker';
 import EditMarkerCategoryForm from '../../../components/map/EditMarkerCategoryForm/EditMarkerCategoryForm';
 import MarkerLegend from '../../../components/map/MarkerLegend/MarkerLegend';
+import useCurrentMarkerFilterStore from '../../../store/useCurrentMarkerFilterStore';
 
 function MapHomePage() {
   const { getProfileQuery } = useAuth();
@@ -33,6 +34,13 @@ function MapHomePage() {
     setCurrentLocation,
     setSelectedLocation,
   } = useLocationStore();
+
+  const { currentMarkerFilter } = useCurrentMarkerFilterStore();
+
+  const filteredMarkers =
+    currentMarkerFilter.length === 0
+      ? markers
+      : markers.filter(marker => currentMarkerFilter.includes(marker.color));
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY ?? '',
@@ -142,8 +150,8 @@ function MapHomePage() {
           />
         )}
         {selectedLocation && <MarkerF position={selectedLocation} />}
-        {markers.length > 0 &&
-          markers.map(marker => (
+        {filteredMarkers.length > 0 &&
+          filteredMarkers.map(marker => (
             <CustomMarker
               key={marker.id}
               id={marker.id}
