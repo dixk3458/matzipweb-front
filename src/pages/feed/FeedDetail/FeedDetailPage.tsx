@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useGetPostByPostId from '../../../hooks/queries/useGetPostByPostId';
 import messages from '../../../constants/messages';
 import { useEffect, useState } from 'react';
@@ -10,14 +10,24 @@ import CommentList from '../../../components/feed/CommentList/CommentList';
 
 import styles from './FeedDetail.module.css';
 import useCurrentPostIdStore from '../../../store/useCurrentPostIdStore';
+import useAuth from '../../../hooks/queries/useAuth';
+import TrashIcon from '../../../components/icon/TrashIcon';
+import useMutateDeletePost from '../../../hooks/queries/useMutateDeletePost';
 
 function FeedDetailPage() {
+  const navigation = useNavigate();
+
   const { setCurrentPostId } = useCurrentPostIdStore();
 
   const location = useLocation();
   const { feedId } = location.state || {};
 
+  const { getProfileQuery } = useAuth();
+  const { id: loginUserId } = getProfileQuery.data ?? {};
+
   const { data: feed, isLoading, error } = useGetPostByPostId(feedId);
+
+  const deletePost = useMutateDeletePost();
 
   const [selectedImage, setSelectedImage] = useState<ImageUri>();
 
@@ -32,6 +42,21 @@ function FeedDetailPage() {
     }
   }, [feed]);
 
+  const handleClickDeleteButton = () => {
+    if (!feed) {
+      return;
+    }
+    if (window.confirm(messages.CONFIRM_DELETE)) {
+      deletePost.mutate(feed.id, {
+        onSuccess: () => {
+          navigation('/map');
+        },
+      });
+    } else {
+      return;
+    }
+  };
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -43,6 +68,8 @@ function FeedDetailPage() {
   if (!feed) {
     return <p>{messages.INVALID_VALUE}</p>;
   }
+
+  const isOwnFeed = loginUserId === feed.author.id;
 
   const {
     images,
@@ -90,6 +117,14 @@ function FeedDetailPage() {
         </ul>
       </div>
       <div className={styles.rightSection}>
+        {isOwnFeed && (
+          <button
+            className={styles.deleteButton}
+            onClick={() => handleClickDeleteButton()}
+          >
+            <TrashIcon />
+          </button>
+        )}
         <h1 className={styles.title}>{title}</h1>
         <div className={styles.metaInfo}>
           <p className={styles.date}>{formatDate(createdDate, '-')}</p>

@@ -8,6 +8,7 @@ const messages = {
   INVALID_VALUE: '유효하지 않은 값입니다.',
   EXCEEDED_FILE_COUNT: '파일 개수를 초과했습니다. (최대 5개)',
   CAN_NOT_UPDATE_MARKER_CATEGORY: '카테고리를 업데이트하는 도중 실패했습니다.',
+  CONFIRM_DELETE: '정말로 포스트를 삭제하시겠습니까?',
 } as const;
 
 export default messages;

@@ -41,8 +41,15 @@ async function getBookmarkedPostsByUserId(
   return data;
 }
 
+async function deletePost(postId: number) {
+  const { data } = await axiosInstance.delete(`/post?postId=${postId}`);
+
+  return data;
+}
+
 export {
   createPost,
+  deletePost,
   getAllPostsByUserId,
   getPostByPostId,
   getLikedPostsByUserId,
