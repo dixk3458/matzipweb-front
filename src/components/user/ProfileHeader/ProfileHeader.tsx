@@ -32,6 +32,9 @@ function ProfileHeader({ currentProfile, isOwnProfile }: ProfileHeaderProps) {
         size="large"
       />
       <div className={styles.innerContainer}>
+        <p className={styles.nickname}>
+          {currentProfile.nickname ?? currentProfile.email}
+        </p>
         <ProfileMeta user={currentProfile} />
         <div className={styles.buttonContainer}>
           {isOwnProfile ? (
