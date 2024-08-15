@@ -34,6 +34,7 @@ function MarkerLegend({ handleClickSettingButton }: MarkerLegendProps) {
       <CustomButton
         icon={<SettingIcon />}
         onClick={() => handleClickSettingButton()}
+        size="small"
       />
     </div>
   );
