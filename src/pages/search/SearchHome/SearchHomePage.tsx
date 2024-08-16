@@ -3,11 +3,15 @@ import styles from './SearchHome.module.css';
 import useGetSearchUserByKeyword from '../../../hooks/queries/useGetSearchUserByKeyword';
 import ProfileCard from '../../../components/common/ProfileCard/ProfileCard';
 import { Link } from 'react-router-dom';
+import { numbers } from '../../../constants';
+import useDebounce from '../../../hooks/useDebounce';
 
 function SearchHomePage() {
   const [text, setText] = useState('');
 
-  const { data: users } = useGetSearchUserByKeyword(text);
+  const debouncedText = useDebounce(text, numbers.DEBOUNCE_TIME);
+
+  const { data: users } = useGetSearchUserByKeyword(debouncedText);
 
   const handleChangeText = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
