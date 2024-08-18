@@ -28,6 +28,8 @@ function MapHomePage() {
 
   const [isOpenMarkerModal, setIsOpenMarkerModal] = useState(false);
 
+
+  
   const {
     currentLocation,
     selectedLocation,
@@ -182,12 +184,6 @@ function MapHomePage() {
           size="small"
           variant="filled"
           onClick={handleClickLocationButton}
-        />
-        <CustomButton
-          icon={<PencilIcon />}
-          size="small"
-          variant="filled"
-          onClick={handleClickPencilButton}
         />
         <CustomButton
           icon={<PencilIcon />}
