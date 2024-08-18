@@ -19,10 +19,7 @@ function PostsGrid({ currentUserId, filter }: PostsGridProps) {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useGetInfinitePostsByUserIdWithFilter(filter, {
-    page: 1,
-    userId: currentUserId,
-  });
+  } = useGetInfinitePostsByUserIdWithFilter(currentUserId, filter);
 
   const observer = useRef<IntersectionObserver | null>(null);
 
@@ -61,6 +58,8 @@ function PostsGrid({ currentUserId, filter }: PostsGridProps) {
   if (error) {
     return <div className={styles.container}>error</div>;
   }
+
+  console.log(data);
 
   const posts = data?.pages.flat() || [];
 

@@ -10,11 +10,6 @@ type RequestCreatePost = Omit<
 
 type ResponsePost = Post;
 
-type RequestGetPosts = {
-  userId: number;
-  page: number;
-};
-
 async function createPost(body: RequestCreatePost): Promise<ResponsePost> {
   const { data } = await axiosInstance.post('/post', body);
 
@@ -34,30 +29,52 @@ async function getPostByPostId(postId: number): Promise<ResponsePost> {
 }
 
 async function getPostsByUserId(
-  params: RequestGetPosts
+  userId: number,
+  pageParam: number
 ): Promise<ResponsePost[]> {
   const { data } = await axiosInstance.get('/posts', {
-    params,
+    params: {
+      userId: userId,
+      page: pageParam,
+    },
   });
 
   return data;
 }
 
 async function getLikedPostsByUserId(
-  params: RequestGetPosts
+  userId: number,
+  pageParam: number
 ): Promise<ResponsePost[]> {
   const { data } = await axiosInstance.get('/posts/liked', {
-    params,
+    params: {
+      userId: userId,
+      page: pageParam,
+    },
   });
 
   return data;
 }
 
 async function getBookmarkedPostsByUserId(
-  params: RequestGetPosts
+  userId: number,
+  pageParam: number
 ): Promise<ResponsePost[]> {
   const { data } = await axiosInstance.get('/posts/bookmarked', {
-    params,
+    params: {
+      userId: userId,
+      page: pageParam,
+    },
+  });
+
+  return data;
+}
+
+async function getPosts(pageParam: number) {
+  const { data } = await axiosInstance.get('/posts/all', {
+    params: {
+      page: pageParam,
+    },
   });
 
   return data;
@@ -70,5 +87,6 @@ export {
   getLikedPostsByUserId,
   getPostsByUserId,
   getBookmarkedPostsByUserId,
+  getPosts,
 };
-export type { RequestCreatePost, ResponsePost, RequestGetPosts };
+export type { RequestCreatePost, ResponsePost };
