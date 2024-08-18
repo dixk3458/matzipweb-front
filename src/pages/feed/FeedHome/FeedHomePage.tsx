@@ -1,19 +1,26 @@
 import useAuth from '../../../hooks/queries/useAuth';
-import useGetAllPostsByUserId from '../../../hooks/queries/useGetAllPostsByUserId';
 import styles from './FeedHomePage.module.css';
 import FeedCard from '../../../components/feed/FeedCard/FeedCard';
 import { Link } from 'react-router-dom';
 import CustomLoadingSpinner from '../../../components/common/CustomLoadingSpinner/CustomLoadingSpinner';
+import useGetInfinitePostsByUserIdWithFilter from '../../../hooks/queries/useGetInfinitePostsByUserIdWithFilter';
 
 function FeedHomePage() {
   const { getProfileQuery } = useAuth();
   const { id: userId } = getProfileQuery.data || {};
 
-  const { data: feeds, isLoading, error } = useGetAllPostsByUserId(userId!);
+  const {
+    data: feeds,
+    isLoading,
+    error,
+  } = useGetInfinitePostsByUserIdWithFilter('post', {
+    userId: userId!,
+    page: 1,
+  });
 
   return (
     <section className={`${styles.container} ${isLoading && styles.loading}`}>
-      {isLoading && <CustomLoadingSpinner />}
+      {/* {isLoading && <CustomLoadingSpinner />}
 
       {!isLoading && error && <p>에러가 발생했습니다. 다시 시도해주세요.</p>}
 
@@ -35,7 +42,7 @@ function FeedHomePage() {
             </li>
           ))}
         </ul>
-      )}
+      )} */}
     </section>
   );
 }

@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
-import useGetPostsByUserIdWithFilter from '../../../hooks/queries/useGetPostsByUserIdWithFilter';
 import { Filter } from '../FilterMenu/FilterMenu';
 
 import styles from './PostsGrid.module.css';
+import { useCallback, useRef } from 'react';
+import useGetInfinitePostsByUserIdWithFilter from '../../../hooks/queries/useGetInfinitePostsByUserIdWithFilter';
+import CustomLoadingSpinner from '../../common/CustomLoadingSpinner/CustomLoadingSpinner';
 
 interface PostsGridProps {
   currentUserId: number;
@@ -11,32 +13,70 @@ interface PostsGridProps {
 
 function PostsGrid({ currentUserId, filter }: PostsGridProps) {
   const {
-    data: filteredPosts,
+    data,
     isLoading,
     error,
-  } = useGetPostsByUserIdWithFilter(currentUserId, filter);
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetInfinitePostsByUserIdWithFilter(filter, {
+    page: 1,
+    userId: currentUserId,
+  });
+
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const lastPostElementRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (isLoading || isFetchingNextPage) {
+        return;
+      }
+
+      if (observer.current) {
+        observer.current.disconnect();
+        return;
+      }
+
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+
+      if (node) {
+        observer.current.observe(node);
+      }
+    },
+    [isLoading, isFetchingNextPage, fetchNextPage, hasNextPage]
+  );
 
   if (isLoading) {
-    return <div className={styles.loading}>Loading...</div>;
-  }
-
-  if (error) {
     return (
-      <div className={styles.error}>
-        An error occurred. Please try again later.
+      <div className={styles.container}>
+        <CustomLoadingSpinner />
       </div>
     );
   }
 
-  if (!filteredPosts || filteredPosts.length === 0) {
-    return <div className={styles.noPosts}>No posts found.</div>;
+  if (error) {
+    return <div className={styles.container}>error</div>;
   }
+
+  const posts = data?.pages.flat() || [];
 
   return (
     <ul className={styles.container}>
-      {filteredPosts.map(post => (
-        <li key={post.id} className={styles.item}>
-          <Link to={`/feed/${post.id}`} state={{ feedId: post.id }} className={styles.link}>
+      {posts.map((post, index) => (
+        <li
+          key={post.id}
+          className={styles.item}
+          ref={index === posts.length - 1 ? lastPostElementRef : null}
+        >
+          <Link
+            to={`/feed/${post.id}`}
+            state={{ feedId: post.id }}
+            className={styles.link}
+          >
             {post.images.length > 0 ? (
               <img
                 src={post.images[0].uri}
