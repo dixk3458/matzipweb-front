@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { getPosts, ResponsePost } from '../../apis';
 import { UseInfiniteQueryCustomOptions } from '../../types';
 import { queryKeys } from '../../constants';
@@ -6,7 +6,7 @@ import { queryKeys } from '../../constants';
 function useGetInfinitePosts(
   queryOptions?: UseInfiniteQueryCustomOptions<ResponsePost[]>
 ) {
-  return useInfiniteQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: [queryKeys.POSTS, queryKeys.GET_POSTS],
     queryFn: ({ pageParam = 1 }) => getPosts(pageParam),
     initialPageParam: 1,

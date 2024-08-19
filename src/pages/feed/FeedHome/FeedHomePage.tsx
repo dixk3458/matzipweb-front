@@ -1,25 +1,19 @@
 import styles from './FeedHomePage.module.css';
 import FeedCard from '../../../components/feed/FeedCard/FeedCard';
 import { Link } from 'react-router-dom';
-import CustomLoadingSpinner from '../../../components/common/CustomLoadingSpinner/CustomLoadingSpinner';
 import useGetInfinitePosts from '../../../hooks/queries/useGetInfinitePosts';
 import { useCallback, useRef } from 'react';
+import SuspenseLoading from '../../../components/common/SuspenseLoading/SuspenseLoading';
 
 function FeedHomePage() {
-  const {
-    data,
-    isLoading,
-    error,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useGetInfinitePosts();
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useGetInfinitePosts();
 
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastElementRef = useCallback(
     (node: HTMLElement | null) => {
-      if (isLoading || isFetchingNextPage) {
+      if (isFetchingNextPage) {
         return;
       }
 
@@ -38,20 +32,8 @@ function FeedHomePage() {
         observer.current.observe(node);
       }
     },
-    [isLoading, isFetchingNextPage, fetchNextPage, hasNextPage]
+    [isFetchingNextPage, fetchNextPage, hasNextPage]
   );
-
-  if (isLoading) {
-    return (
-      <div className={styles.container}>
-        <CustomLoadingSpinner />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div className={styles.container}>error</div>;
-  }
 
   const feeds = data?.pages.flat() || [];
 
@@ -74,6 +56,7 @@ function FeedHomePage() {
           </li>
         ))}
       </ul>
+      {isFetchingNextPage && <SuspenseLoading />}
     </section>
   );
 }

@@ -17,6 +17,7 @@ import CustomMarker from '../../../components/map/CustomMarker/CustomMarker';
 import EditMarkerCategoryForm from '../../../components/map/EditMarkerCategoryForm/EditMarkerCategoryForm';
 import MarkerLegend from '../../../components/map/MarkerLegend/MarkerLegend';
 import useCurrentMarkerFilterStore from '../../../store/useCurrentMarkerFilterStore';
+import SuspenseLoading from '../../../components/common/SuspenseLoading/SuspenseLoading';
 
 function MapHomePage() {
   const { getProfileQuery } = useAuth();
@@ -28,8 +29,6 @@ function MapHomePage() {
 
   const [isOpenMarkerModal, setIsOpenMarkerModal] = useState(false);
 
-
-  
   const {
     currentLocation,
     selectedLocation,
@@ -117,7 +116,7 @@ function MapHomePage() {
   }, [map, currentLocation]);
 
   if (!isLoaded) {
-    return <p>로딩중...</p>;
+    return <SuspenseLoading />;
   }
 
   if (loadError) {

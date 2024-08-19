@@ -1,4 +1,6 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import {
+  useSuspenseInfiniteQuery,
+} from '@tanstack/react-query';
 import {
   getBookmarkedPostsByUserId,
   getLikedPostsByUserId,
@@ -22,7 +24,7 @@ function useGetInfinitePostsByUserIdWithFilter(
     request = getBookmarkedPostsByUserId;
   }
 
-  return useInfiniteQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: [queryKeys.POSTS, queryKeys.GET_POSTS, userId, filter],
     queryFn: ({ pageParam = 1 }) => request(userId, pageParam),
     initialPageParam: 1,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -14,6 +14,7 @@ import FeedDetailPage from './pages/feed/FeedDetail/FeedDetailPage';
 import SearchHomePage from './pages/search/SearchHome/SearchHomePage';
 import UserDetailPage from './pages/user/UserDetail/UserDetailPage';
 import EditHomePage from './pages/edit/EditHome/EditHomePage';
+import SuspenseLoading from './components/common/SuspenseLoading/SuspenseLoading';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -48,7 +49,9 @@ const router = createBrowserRouter([
         path: '/feed',
         element: (
           <PrivateRoute>
-            <FeedHomePage />
+            <Suspense fallback={<SuspenseLoading />}>
+              <FeedHomePage />
+            </Suspense>
           </PrivateRoute>
         ),
       },
