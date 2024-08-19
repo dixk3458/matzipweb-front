@@ -7,9 +7,7 @@ import styles from './CommentList.module.css';
 
 function CommentList() {
   const { currentPostId } = useCurrentPostIdStore();
-  const { data: comments, isLoading } = useGetAllCommentsByPostId(
-    currentPostId!
-  );
+  const { data: comments } = useGetAllCommentsByPostId(currentPostId!);
 
   return (
     <>

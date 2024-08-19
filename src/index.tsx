@@ -15,6 +15,7 @@ import SearchHomePage from './pages/search/SearchHome/SearchHomePage';
 import UserDetailPage from './pages/user/UserDetail/UserDetailPage';
 import EditHomePage from './pages/edit/EditHome/EditHomePage';
 import SuspenseLoading from './components/common/SuspenseLoading/SuspenseLoading';
+import RetryErrorBoundary from './components/common/RetryErrorBoundary/RetryErrorBoundary';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -27,64 +28,90 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <HomePage />,
+        element: (
+          <RetryErrorBoundary>
+            <HomePage />
+          </RetryErrorBoundary>
+        ),
       },
       {
         path: '/signin',
-        element: <SigninPage />,
+        element: (
+          <RetryErrorBoundary>
+            <SigninPage />
+          </RetryErrorBoundary>
+        ),
       },
       {
         path: '/signup',
-        element: <SignupPage />,
+        element: (
+          <RetryErrorBoundary>
+            <SignupPage />,
+          </RetryErrorBoundary>
+        ),
       },
       {
         path: '/map',
         element: (
-          <PrivateRoute>
-            <MapHomePage />
-          </PrivateRoute>
+          <RetryErrorBoundary>
+            <PrivateRoute>
+              <MapHomePage />
+            </PrivateRoute>
+          </RetryErrorBoundary>
         ),
       },
       {
         path: '/feed',
         element: (
-          <PrivateRoute>
+          <RetryErrorBoundary>
             <Suspense fallback={<SuspenseLoading />}>
-              <FeedHomePage />
+              <PrivateRoute>
+                <FeedHomePage />
+              </PrivateRoute>
             </Suspense>
-          </PrivateRoute>
+          </RetryErrorBoundary>
         ),
       },
       {
         path: '/feed/:id',
         element: (
-          <PrivateRoute>
-            <FeedDetailPage />
-          </PrivateRoute>
+          <RetryErrorBoundary>
+            <Suspense fallback={<SuspenseLoading />}>
+              <PrivateRoute>
+                <FeedDetailPage />
+              </PrivateRoute>
+            </Suspense>
+          </RetryErrorBoundary>
         ),
       },
       {
         path: '/search',
         element: (
-          <PrivateRoute>
-            <SearchHomePage />
-          </PrivateRoute>
+          <RetryErrorBoundary>
+            <PrivateRoute>
+              <SearchHomePage />
+            </PrivateRoute>
+          </RetryErrorBoundary>
         ),
       },
       {
         path: '/user/:email',
         element: (
-          <PrivateRoute>
-            <UserDetailPage />
-          </PrivateRoute>
+          <RetryErrorBoundary>
+            <PrivateRoute>
+              <UserDetailPage />
+            </PrivateRoute>
+          </RetryErrorBoundary>
         ),
       },
       {
         path: '/edit',
         element: (
-          <PrivateRoute>
-            <EditHomePage />
-          </PrivateRoute>
+          <RetryErrorBoundary>
+            <PrivateRoute>
+              <EditHomePage />
+            </PrivateRoute>
+          </RetryErrorBoundary>
         ),
       },
     ],

@@ -13,6 +13,7 @@ import useCurrentPostIdStore from '../../../store/useCurrentPostIdStore';
 import useAuth from '../../../hooks/queries/useAuth';
 import TrashIcon from '../../../components/icon/TrashIcon';
 import useMutateDeletePost from '../../../hooks/queries/useMutateDeletePost';
+import RetryErrorBoundary from '../../../components/common/RetryErrorBoundary/RetryErrorBoundary';
 
 function FeedDetailPage() {
   const navigation = useNavigate();
@@ -25,7 +26,7 @@ function FeedDetailPage() {
   const { getProfileQuery } = useAuth();
   const { id: loginUserId } = getProfileQuery.data ?? {};
 
-  const { data: feed, isLoading, error } = useGetPostByPostId(feedId);
+  const { data: feed } = useGetPostByPostId(feedId);
 
   const deletePost = useMutateDeletePost();
 
@@ -56,18 +57,6 @@ function FeedDetailPage() {
       return;
     }
   };
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error occurred</p>;
-  }
-
-  if (!feed) {
-    return <p>{messages.INVALID_VALUE}</p>;
-  }
 
   const isOwnFeed = loginUserId === feed.author.id;
 
@@ -137,7 +126,9 @@ function FeedDetailPage() {
           <MarkerIcon color={color} size={24} />
         </div>
         <ActionBar />
-        <CommentList />
+        <RetryErrorBoundary>
+          <CommentList />
+        </RetryErrorBoundary>
       </div>
     </section>
   );
