@@ -7,7 +7,7 @@ interface FeedCardProps {
 }
 
 function FeedCard({ feed }: FeedCardProps) {
-  const { title, description, images, score, color } = feed;
+  const { title, description, images, score, color, author } = feed;
   return (
     <div className={styles.container}>
       {images.length > 0 ? (
@@ -20,7 +20,10 @@ function FeedCard({ feed }: FeedCardProps) {
         <div className={styles.noImage}>No Image Available</div>
       )}
       <div className={styles.content}>
-        <h3 className={styles.titleText}>{title}</h3>
+        <div className={styles.titleAndAuthor}>
+          <p className={styles.titleText}>{title}</p>
+          <p className={styles.author}>by {author.nickname ?? author.email}</p>
+        </div>
         <p className={styles.descriptionText}>{description}</p>
         <div className={styles.meta}>
           <span className={styles.score}>{`Score ${score}`}</span>

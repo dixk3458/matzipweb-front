@@ -34,26 +34,32 @@
 .content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   border-top: 1px solid var(--color-gray-200);
   width: 100%;
   padding: 10px;
-  text-align: center;
   gap: 10px;
   flex-grow: 1;
+}
+
+.titleAndAuthor {
+  display: flex;
+  justify-content: space-between;
 }
 
 .titleText {
   font-size: 1.2rem;
   font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
   width: 100%;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* 최대 3줄로 제한 */
-  -webkit-box-orient: vertical;
-  line-clamp: 1;
   color: var(--color-black);
+  /* white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-clamp: 1; */
+}
+
+.author {
+  flex-shrink: 0;
+  color: var(--color-gray-700);
 }
 
 .descriptionText {

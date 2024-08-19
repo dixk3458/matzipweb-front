@@ -114,7 +114,7 @@ function FeedDetailPage() {
             <TrashIcon />
           </button>
         )}
-        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.title}>{title}</p>
         <div className={styles.metaInfo}>
           <p className={styles.date}>{formatDate(createdDate, '-')}</p>
           <p className={styles.author}>By {author.nickname || author.email}</p>
