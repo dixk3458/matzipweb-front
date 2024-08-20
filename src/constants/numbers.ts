@@ -5,6 +5,8 @@ const numbers = {
   DEFAULT_LONGITUDE: 126.978,
   DEFAULT_SCORE: 3,
   DEBOUNCE_TIME: 300,
+  DEFAULT_STALE_TIME: 1000 * 60 * 5,
+  COMMENT_REFRESH_TIME: 1000 * 60,
 } as const;
 
 export { numbers };

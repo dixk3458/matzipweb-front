@@ -1,13 +1,11 @@
-import {
-  useSuspenseInfiniteQuery,
-} from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import {
   getBookmarkedPostsByUserId,
   getLikedPostsByUserId,
   getPostsByUserId,
   ResponsePost,
 } from '../../apis';
-import { queryKeys } from '../../constants';
+import { numbers, queryKeys } from '../../constants';
 import { UseInfiniteQueryCustomOptions } from '../../types';
 import { Filter } from '../../components/user/FilterMenu/FilterMenu';
 
@@ -33,6 +31,7 @@ function useGetInfinitePostsByUserIdWithFilter(
 
       return lastPost ? allPages.length + 1 : undefined;
     },
+    staleTime: numbers.DEFAULT_STALE_TIME,
     ...queryOptions,
   });
 }

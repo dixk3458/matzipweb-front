@@ -75,6 +75,7 @@ function useGetProfile(
   return useQuery({
     queryFn: getProfile,
     queryKey: [queryKeys.AUTH, queryKeys.GET_PROFILE],
+    staleTime: numbers.DEFAULT_STALE_TIME,
     ...queryOptions,
   });
 }
@@ -94,7 +95,7 @@ function useGetRefreshToken() {
       setHeader('Authorization', `Bearer ${data.accessToken}`);
       setLocalStorage(storageKeys.ACCESS_TOKEN, data.accessToken);
     }
-  }, [isSuccess]);
+  }, [isSuccess, data?.accessToken]);
 
   useEffect(() => {
     if (isError) {

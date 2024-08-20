@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getProfileByEmail } from '../../apis/user';
-import { queryKeys } from '../../constants';
+import { numbers, queryKeys } from '../../constants';
 import { DetailUser, UseQueryCustomOptions } from '../../types';
 
 function useGetProfileByEmail(
@@ -10,6 +10,7 @@ function useGetProfileByEmail(
   return useQuery({
     queryFn: () => getProfileByEmail(email),
     queryKey: [queryKeys.GET_PROFILE, email],
+    staleTime: numbers.DEFAULT_STALE_TIME,
     ...queryOptions,
   });
 }

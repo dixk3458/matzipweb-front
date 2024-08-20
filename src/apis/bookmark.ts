@@ -1,7 +1,7 @@
 import axiosInstance from './axios';
 
 async function bookmarkPost(postId: number): Promise<void> {
-  const { data } = await axiosInstance.post('/bookmark', { data: postId });
+  const { data } = await axiosInstance.post('/bookmark', { postId });
 
   return data;
 }

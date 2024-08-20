@@ -12,6 +12,7 @@ import useGetBookmarkByPostId from '../../../hooks/queries/useGetBookmarkByPostI
 
 function ActionBar() {
   const { currentPostId } = useCurrentPostIdStore();
+
   const { data: liked = false } = useGetLikeByPostId(currentPostId!);
 
   const { data: bookmarked = false } = useGetBookmarkByPostId(currentPostId!);

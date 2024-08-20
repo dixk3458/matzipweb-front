@@ -18,6 +18,10 @@ function useMutateCreatePost(
       queryClient.invalidateQueries({
         queryKey: [userId, queryKeys.MARKER, queryKeys.GET_MARKERS],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.POSTS, queryKeys.GET_POSTS, userId],
+      });
     },
     ...mutationOptions,
   });

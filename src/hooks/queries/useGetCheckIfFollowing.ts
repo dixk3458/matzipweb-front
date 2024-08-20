@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { checkIfFollowing, ResponseCheckIfFollowing } from '../../apis/follow';
-import { queryKeys } from '../../constants';
+import { numbers, queryKeys } from '../../constants';
 import { UseQueryCustomOptions } from '../../types';
 
 function useGetCheckIfFollowing(
@@ -10,6 +10,7 @@ function useGetCheckIfFollowing(
   return useQuery({
     queryFn: () => checkIfFollowing(userId),
     queryKey: [queryKeys.FOLLOWING, queryKeys.GET_FOLLOWING, userId],
+    staleTime: numbers.DEFAULT_STALE_TIME,
     ...queryOptions,
   });
 }

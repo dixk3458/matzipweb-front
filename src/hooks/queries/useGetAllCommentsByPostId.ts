@@ -3,7 +3,7 @@ import {
   getAllCommentsByPostId,
   ResponseGetAllComments,
 } from '../../apis/comment';
-import { queryKeys } from '../../constants';
+import { numbers, queryKeys } from '../../constants';
 import { UseQueryCustomOptions } from '../../types';
 
 function useGetAllCommentsByPostId(
@@ -13,6 +13,9 @@ function useGetAllCommentsByPostId(
   return useQuery({
     queryFn: () => getAllCommentsByPostId(postId),
     queryKey: [queryKeys.COMMENTS, queryKeys.GET_COMMENTS, postId],
+    staleTime: numbers.COMMENT_REFRESH_TIME,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
     ...queryOptions,
   });
 }

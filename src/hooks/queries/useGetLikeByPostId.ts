@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getLikeByPostId } from '../../apis/like';
 import { UseQueryCustomOptions } from '../../types';
-import { queryKeys } from '../../constants';
+import { numbers, queryKeys } from '../../constants';
 
 function useGetLikeByPostId(
   postId: number,
@@ -10,6 +10,7 @@ function useGetLikeByPostId(
   return useQuery({
     queryFn: () => getLikeByPostId(postId),
     queryKey: [queryKeys.LIKE, queryKeys.GET_LIKE, postId],
+    staleTime: numbers.DEFAULT_STALE_TIME,
     ...queryOptions,
   });
 }

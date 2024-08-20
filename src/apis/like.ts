@@ -1,7 +1,9 @@
 import axiosInstance from './axios';
 
 async function likePost(postId: number): Promise<void> {
-  const { data } = await axiosInstance.post('/like', { data: { postId } });
+  const { data } = await axiosInstance.post('/like', {
+    postId,
+  });
 
   return data;
 }

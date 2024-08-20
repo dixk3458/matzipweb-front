@@ -1,7 +1,7 @@
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { getPosts, ResponsePost } from '../../apis';
 import { UseInfiniteQueryCustomOptions } from '../../types';
-import { queryKeys } from '../../constants';
+import { numbers, queryKeys } from '../../constants';
 
 function useGetInfinitePosts(
   queryOptions?: UseInfiniteQueryCustomOptions<ResponsePost[]>
@@ -15,6 +15,7 @@ function useGetInfinitePosts(
 
       return lastPost ? allPages.length + 1 : undefined;
     },
+    staleTime: numbers.DEFAULT_STALE_TIME,
     ...queryOptions,
   });
 }
