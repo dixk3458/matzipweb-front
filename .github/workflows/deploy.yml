@@ -19,6 +19,10 @@ jobs:
       
       - name: 의존성 설치
         run: npm ci
+
+      - name: .env 파일 만들기
+        run: |
+          echo '${{secrets.ENV}}' > .env
       
       - name: React 빌드 진행
         run: npm run build
