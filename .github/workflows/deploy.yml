@@ -32,8 +32,8 @@ jobs:
       
       - name: S3 기존 파일들 전체 삭제 후 새로 업로드
         run: |
-          aws s3 rm --recursive s3://matzipweb-client
-          aws s3 cp ./ s3://matzipweb-client/ --recursive
+          aws s3 rm s3://matzipweb-client --recursive
+          aws s3 cp ./build s3://matzipweb-client/ --recursive
       
       - name: Cloudfront 캐시 무효화
         run: aws cloudfront create-invalidation --distribution-id E1D2J66MGFBDPM --paths "/*"
