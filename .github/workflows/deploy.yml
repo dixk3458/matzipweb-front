@@ -16,14 +16,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
+
       - name: 의존성 설치
         run: npm ci
 
       - name: .env 파일 만들기
         run: |
           echo '${{secrets.ENV}}' > .env
-      
+
       - name: React 빌드 진행
         run: npm run build
 
@@ -33,11 +33,11 @@ jobs:
           aws-region: ap-northeast-2
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
+
       - name: S3 기존 파일들 전체 삭제 후 새로 업로드
         run: |
           aws s3 rm s3://matzipweb-client --recursive
-          aws s3 cp ./build s3://matzipweb-client/ --recursive
-      
+          aws s3 cp ./dist s3://matzipweb-client/ --recursive
+
       - name: Cloudfront 캐시 무효화
         run: aws cloudfront create-invalidation --distribution-id E1D2J66MGFBDPM --paths "/*"
