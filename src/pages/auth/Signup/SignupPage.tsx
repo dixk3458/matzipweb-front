@@ -48,6 +48,11 @@ function SignupPage() {
 
   return (
     <section className={styles.container}>
+      <meta name="description" content="회원가입 페이지" />
+      <meta name="keywords" content="회원가입, 사용자, 인증" />
+      <meta property="og:title" content="회원가입 - Matzipweb" />
+      <meta property="og:description" content="회원가입 페이지" />
+      <title>회원가입 - Matzipweb</title>
       <h1 className={styles.titleText}>회원가입</h1>
       <form className={styles.formContainer}>
         <InputField

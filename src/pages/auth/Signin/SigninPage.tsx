@@ -49,6 +49,11 @@ function SigninPage() {
 
   return (
     <section className={styles.container}>
+      <meta name="description" content="로그인 페이지" />
+      <meta name="keywords" content="로그인, 인증, 사용자" />
+      <meta property="og:title" content="로그인 - Matzipweb" />
+      <meta property="og:description" content="로그인 페이지" />
+      <title>로그인 - Matzipweb</title>
       <h1 className={styles.titleText}>로그인</h1>
       <form className={styles.formContainer}>
         <InputField

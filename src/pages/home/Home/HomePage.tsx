@@ -28,6 +28,14 @@ function HomePage() {
 
   return (
     <section className={styles.container}>
+      <meta name="description" content="맛집 저장 및 공유 플랫폼" />
+      <meta name="keywords" content="맛집, 저장, 공유, 리뷰" />
+      <meta name="og:title" content="Matzipweb" />
+      <meta
+        name="og:description"
+        content="나만의 맛집을 찾아서 저장하고 공유하세요!"
+      />
+      <title>Matzipweb</title>
       <h1 className={styles.descriptionText}>
         나만의 맛집을 찾아서 저장하고 공유하세요!
       </h1>
